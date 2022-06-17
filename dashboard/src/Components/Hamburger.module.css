@@ -1,9 +1,0 @@
-.container {
-  width: 100px;
-  height: 100px;
-}
-
-.container:hover {
-  width: 120px;
-  height: 120px;
-}

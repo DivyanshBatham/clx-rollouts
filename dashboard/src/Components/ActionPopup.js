@@ -8,7 +8,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 // props will have info about heading, details
 export default function ActionPopup(props) {
-  const { open, setOpen, heading, details } = props;
+  const { open, setOpen, heading, details, agreeText, disagreeText} = props;
 
   const handleClose = () => {
     setOpen(false);
@@ -27,15 +27,15 @@ export default function ActionPopup(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {details}
+          {details}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Disagree
+            {agreeText}
           </Button>
           <Button onClick={handleClose} color="primary" autoFocus>
-            Agree
+            {disagreeText}
           </Button>
         </DialogActions>
       </Dialog>
