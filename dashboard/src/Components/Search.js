@@ -8,12 +8,14 @@ export default function Search(props) {
         className="search"
         value={props.searchText}
         onChange={(value) => props.setSearchText(value)}
+        onRequestSearch = {props.onSearch}
         placeholder="Search..."
         closeIcon={
           <IconButton onClick={() => props.setSearchText("")}>
             <CloseIcon />
           </IconButton>
         }
+        autoFocus
       />
     </div>
   );
