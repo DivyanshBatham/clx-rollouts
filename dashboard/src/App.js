@@ -1,12 +1,6 @@
 import "./styles.css";
-import List from "./Components/List.js";
-import Search from "./Components/Search";
-import AddButton from "./Components/AddButton";
-import Button from "@material-ui/core/Button";
 import { useState } from "react";
-import ActionPopup from "./Components/ActionPopup";
-import Hamburger from "./Components/Hamburger.js";
-
+import Dashboard from "./Pages/Dashboard";
 export default function App() {
   const [searchText, setSearchText] = useState("");
   const [open, setOpen] = useState(false);
@@ -20,31 +14,54 @@ export default function App() {
   const onHamClick = () => {
     setopenOptions(true);
   };
+  
+  // const options= ["All","Class","Educator","Goal"];
+  const options = ["Live","Cancelled","Paused","Failed","Created","Success"];
+  const [currentOption,setCurrentOption] = useState(options[0]);
+  const rows = [
+    {"name" : "abc","createdBy" : "Venu", "createdAt" : "13-07-2002","updatedAt" : "13-07-2002","status" : "Live"},
+    {"name" : "adsbc","createdBy" : "Venu", "createdAt" : "13-07-2002","updatedAt" : "13-07-2002","status" : "Live"},
+    {"name" : "abdsac","createdBy" : "Venu", "createdAt" : "13-07-2002","updatedAt" : "13-07-2002","status" : "Cancelled"},
+    {"name" : "abdsadc","createdBy" : "Venu", "createdAt" : "13-07-2002","updatedAt" : "13-07-2002","status" : "Success"}
+  ]
 
-  const rows = [{}, {}];
+  const filters = [{"filterType" : "status","filterOptions" : ["All","Live","Cancelled","Paused","Failure","Created"]},
+                    {"filterType" : "type","filterOptions" : ["All","Feature","Deployment"]},
+                    {"filterType" : "level","filterOptions" : ["All","Goal","Class","Educator","Course"]}
+]
+const [selectedFilters,setSelectedFilters] = useState(
+  {"status" : 0, "type" : 0, "level" : 0}
+  );
   return (
-    <div className="App">
-      <Search searchText={searchText} setSearchText={setSearchText} />
-      <p>{searchText}</p>
-      <AddButton
-        onClick={() => {
-          console.log("clicked");
-        }}
+    <div>
+      {/* <Search 
+      searchText ={searchText}
+      setSearchText ={setSearchText}
+      onSearch = {() => console.log(searchText + " is searched.")}
       />
-      <List
-        property="Description"
-        details="Run Ab testing on raise hand feature"
+      <DropDownMenu
+        options = {options}
+        currentOption = {currentOption}
+        onChange = {
+          (index) => {
+          console.log(options[index])
+        }
+        }
       />
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Make it Live
-      </Button>
-      <ActionPopup
-        open={open}
-        setOpen={setOpen}
-        heading={heading}
-        details={details}
+      <AddButton onClick = {() => console.log("add button clicked.")}/>
+      <RolloutTable
+        options = {options}
+        rows = {rows}
+        onRolloutClick = {(index) => console.log(rows[index].name + " got clicked")}
+        rolloutOnChange = {(index,optionIndex) => console.log(rows[index].name + " got "+ options[optionIndex])}
+      />
+
+      <FilterDropDown
+      filters = {filters}
+      selectedFilters = {selectedFilters}
+      setSelectedFilters = {setSelectedFilters}
       /> */}
-      <Hamburger onHamClick={onHamClick} />
+      <Dashboard />
     </div>
   );
 }

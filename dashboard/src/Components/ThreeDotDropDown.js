@@ -4,7 +4,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Slide from "@mui/material/Slide";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
-export default function DropDownMenu(props) {
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+export default function ThreeDotDropDown(props) {
+    const {style, options, intialOption, onChange } = props;
     const [anchor, setAnchor] = useState(null);
 
     const [selected, setSelected] = useState(0);
@@ -17,21 +19,19 @@ export default function DropDownMenu(props) {
         setAnchor(null);
     };
 
-    const [currentOption,setCurrentOption] = useState(props.currentOption);
+    const [currentOption,setCurrentOption] = useState(intialOption);
     const onMenuItemClick = (event, index) => {
         setAnchor(null);
         setSelected(index);
-        setCurrentOption(props.options[index]);
-        props.onChange(index);
+        setCurrentOption(options[index]);
+        onChange(index);
     };
     return (
-        <div style={props.style}>
+        <div style={style}>
             <Button 
-            variant="contained"
             onClick={openMenu}
-            endIcon={<KeyboardArrowDownIcon />}
             >
-                {currentOption}
+                <MoreVertIcon />
             </Button>
             <Menu
                 open={Boolean(anchor)}
@@ -40,7 +40,7 @@ export default function DropDownMenu(props) {
                 keepMounted
                 TransitionComponent={Slide}
             >
-            {props.options.map((option, index) => (
+            {options.map((option, index) => (
             <MenuItem
                 key={index}
                 onClick={(event) => onMenuItemClick(event, index)}

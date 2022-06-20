@@ -1,9 +1,10 @@
-import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
+import Button from "@mui/material/Button";
+import AddIcon from '@mui/icons-material/Add';
 export default function AddButton(props) {
+  const {style, handleClick} = props;
   return (
-    <div style={props.style}>
-      <Button onClick={props.onClick}>
+    <div style={style}>
+      <Button variant="contained" onClick={handleClick}>
         <AddIcon />
       </Button>
     </div>

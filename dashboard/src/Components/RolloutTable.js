@@ -1,17 +1,15 @@
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import MenuIcon from "@material-ui/icons/Menu";
-import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
-import DropDownMenu from "./DropDownMenu";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import Paper from "@mui/material/Paper";
+import ThreeDotDropDown from "./ThreeDotDropDown";
 export default function RolloutTable(props) {
-
+  const {style, rows, onRolloutClick, options , rolloutOnChange} = props;
   return (
-    <div style={props.style}>
+    <div style={style}>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -24,19 +22,21 @@ export default function RolloutTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.rows.map((row,index) => (
+            {rows.map((row,index) => (
               <TableRow
               key={row.name}
+              hover
               >
-                    <TableCell onClick={() => props.onRolloutClick(index)} align="center">{row.name}</TableCell>
-                    <TableCell onClick={() => props.onRolloutClick(index)} align="center">{row.createdBy}</TableCell>
-                    <TableCell onClick={() => props.onRolloutClick(index)} align="center">{row.createdAt}</TableCell>
-                    <TableCell onClick={() => props.onRolloutClick(index)} align="center">{row.updatedAt}</TableCell>
-                    <TableCell align="center">
-                      <DropDownMenu options={props.options}
-                        currentOption = {row.status}
+                    <TableCell onClick={() => onRolloutClick(index)} align="center">{row.name}</TableCell>
+                    <TableCell onClick={() => onRolloutClick(index)} align="center">{row.createdBy}</TableCell>
+                    <TableCell onClick={() => onRolloutClick(index)} align="center">{row.createdAt}</TableCell>
+                    <TableCell onClick={() => onRolloutClick(index)} align="center">{row.updatedAt}</TableCell>
+                    <TableCell onClick={() => onRolloutClick(index)} align="center">{row.status}</TableCell>
+                    <TableCell align="right">
+                      <ThreeDotDropDown options={options}
+                        intialOption = {row.status}
                         onChange = {(optionIndex) => {
-                        props.rolloutOnChange(index,optionIndex);
+                        rolloutOnChange(index,optionIndex);
                       }}
                       />
                     </TableCell>
