@@ -38,7 +38,7 @@ function BasicSelect(props) {
 export default function FilterDropDown(props) {
     
     
-    const {style,filters, selectedFilters, setSelectedFilters} =props;
+    const {style,filters, selectedFilters, setSelectedFilters, onApply} =props;
     const [anchor, setAnchor] = useState(null);
 
     const [selected, setSelected] = useState(0);
@@ -52,10 +52,13 @@ export default function FilterDropDown(props) {
     };
 
     const onMenuItemClick = (event, index) => {
-        setAnchor(null);
         setSelected(index);
     };
     
+    const handleClick = () => {
+        setAnchor(null);
+        onApply();
+    }
     const filterTypeOptions = filters.map(a => a.filterType);
     return (
         <div style={style}>
@@ -85,6 +88,9 @@ export default function FilterDropDown(props) {
                     />
                 </MenuItem>
                 ))}
+                <Button variant="contained" style={{float: 'right',margin: "2% 4% 4% 2%"}} onClick={handleClick}>
+                    Apply
+                </Button>
             </Menu>
         </div>
     );

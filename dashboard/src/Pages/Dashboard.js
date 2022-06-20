@@ -5,6 +5,7 @@ import {
   Box,
   CssBaseline,
   Drawer,
+  Typography
 } from "@mui/material"
 import AddButton from "../Components/AddButton";
 import Search from "../Components/Search";
@@ -12,6 +13,7 @@ import FilterDropDown from "../Components/FilterDropDown"
 import RolloutTable from "../Components/RolloutTable";
 import CreateRollout from "../Sidebars/CreateRollout"
 import ViewRollout from "../Sidebars/ViewRollout"
+import { ReactComponent as UnacademyLogo } from "../Assets/Unacademy-logo.svg";
 const useStyles = {
     width: "50vw",
     background: "white",
@@ -54,30 +56,35 @@ export default function Dashboard() {
     const [selectedFilters,setSelectedFilters] = useState(
     {"status" : 0, "type" : 0, "level" : 0}
     );
+   const  onFilterApply = () => {
+     console.log(selectedFilters);
+   }
   return (
     <>
       <CssBaseline />
-      <Box component="nav">
-        <AppBar position="static">
+      <Box component="nav" >
+        <AppBar position="static" style={{backgroundColor : "#ACCBF7"}}>
           <Toolbar>
+            <UnacademyLogo width={182} height={64} style = {{marginLeft : "1vw"}}/>
+            <Typography variant="h4" style = {{marginLeft : "1vw",color : "#2d81f7", fontWeight : "Bold"}}>
+              Rollouts
+            </Typography>
             <Search
-              style = {{width : "50%"}}
+              style = {{marginLeft : "15vw",width : "30vw"}}
               searchText={searchText}
               setSearchText={setSearchText}
               onSearch={() => console.log(searchText + " is searched.")}
             />
-            <Box m={2}>
-              <FilterDropDown
-              style = {{color : "#08bd80"}}
-                  filters = {filters}
-                  selectedFilters = {selectedFilters}
-                  setSelectedFilters = {setSelectedFilters}
-              />
-            </Box>
-            <Box m={2}>
-              <AddButton 
-                handleClick={toggleCreateRolloutSlider} />
-            </Box>
+            <FilterDropDown
+                style = {{marginLeft : "15vw"}}
+                filters = {filters}
+                selectedFilters = {selectedFilters}
+                setSelectedFilters = {setSelectedFilters}
+                onApply = {onFilterApply}
+            />
+            <AddButton
+              style = {{marginLeft : "2vw"}} 
+              handleClick={toggleCreateRolloutSlider} />
             <Drawer
               open={createRolloutOpen}
               anchor="right"
