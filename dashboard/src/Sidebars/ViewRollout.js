@@ -9,7 +9,8 @@ const useStyles = {
   height: "100%",
 };
 
-export default function Playground() {
+export default function Playground(props) {
+  const { setEditRolloutOpen, setViewRolloutOpen, setViewConfigOpen, setCreateConfigOpen } = props;
   const [reqError, setReqError] = React.useState({
     rolloutName: false,
     description: false,
@@ -74,25 +75,41 @@ export default function Playground() {
   const onEditClick = () => {
     // TO DO : open Edit Rollout sidebar
     console.log("Edit button clicked");
+    setViewRolloutOpen(false);
+    setTimeout(() => {
+      setEditRolloutOpen(true);
+    }, 500);
   };
 
   const onConfigClick = () => {
     // TO DO : get the info from database if configuration is available
     // If config is is already created, then button is open config otherise create config
-    console.log("View config button clicked");
+    if (props.isConfigured === true) {
+      console.log("View config button clicked");
+      setViewRolloutOpen(false);
+      setTimeout(() => {
+        setViewConfigOpen(true);
+      }, 500);
+    } else {
+      console.log("create config button clicked");
+      setViewRolloutOpen(false);
+      setTimeout(() => {
+        setCreateConfigOpen(true);
+      }, 500);
+    }
   };
 
   return (
     <Box style={useStyles} component="div">
       <div
         style={{
-          backgroundColor: "#1650E8",
-          marginTop: "0px"
+          backgroundColor: "#ACCBF7",
+          marginTop: "0px",
         }}
       >
         <h1
           style={{
-            color: "white",
+            color: "#2d81f7",
             textAlign: "center",
             paddingTop: "1vw",
             paddingBottom: "1vw",
@@ -102,7 +119,7 @@ export default function Playground() {
         </h1>
       </div>
       <Form
-        isDisabled = {true}
+        isDisabled={true}
         formData={formData}
         rolloutInfo={rolloutInfo}
         setRolloutInfo={setRolloutInfo}
@@ -117,10 +134,9 @@ export default function Playground() {
       >
         <Button
           variant="contained"
+          color="primary"
           onClick={onEditClick}
           style={{
-            backgroundColor: "blue",
-            color: "white",
             marginRight: "2vw",
           }}
         >
@@ -131,7 +147,9 @@ export default function Playground() {
           onClick={onConfigClick}
           style={{ backgroundColor: "grey", color: "white" }}
         >
-          Open Configuration
+          {props.isConfigured === true
+            ? "Open Configuration"
+            : "Create Configuration"}
         </Button>
       </div>
     </Box>

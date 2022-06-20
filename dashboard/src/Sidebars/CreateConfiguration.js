@@ -4,10 +4,10 @@ import Button from "@mui/material/Button";
 import Form from "../Components/ConfigForm";
 
 const useStyles = {
-    width: "50vw",
-    background: "white",
-    height: "100%",
-  };
+  width: "50vw",
+  background: "white",
+  height: "100%",
+};
 
 export default function CreateConfiguration() {
   const [open, setOpen] = React.useState(false);
@@ -29,8 +29,7 @@ export default function CreateConfiguration() {
     "Rollout start range": "rolloutStartRange",
     "Rollout end range": "rolloutEndRange",
   };
-  
-  
+
   /**
    * Callback whenever any object deleted from configuration
    */
@@ -38,8 +37,8 @@ export default function CreateConfiguration() {
     console.log("Delete the object uid.");
     // ask for confirmation using validation popup
     // TO DO: make api call to delete the object
-  }
-  
+  };
+
   const onCreateClick = () => {
     if (rolloutConfigInfo.object_uid === [] || rolloutConfigInfo.value === "") {
       // Error : Fill required information
@@ -86,9 +85,9 @@ export default function CreateConfiguration() {
   };
 
   const dropdownStyle = {
-      width: "80%",
-      marginBottom: "2%",
-      marginLeft: "10%"
+    width: "80%",
+    marginBottom: "2%",
+    marginLeft: "10%",
   };
 
   const toggleSlider = () => {
@@ -99,13 +98,13 @@ export default function CreateConfiguration() {
     <Box style={useStyles} component="div">
       <div
         style={{
-          backgroundColor: "#1650E8",
+          backgroundColor: "#ACCBF7",
           marginTop: "0px",
         }}
       >
         <h1
           style={{
-            color: "white",
+            color: "#2d81f7",
             textAlign: "center",
             paddingTop: "1vw",
             paddingBottom: "1vw",
@@ -130,11 +129,10 @@ export default function CreateConfiguration() {
         style={{ alignItems: "right", marginTop: "1.5vw", marginLeft: "40vw" }}
       >
         <Button
+          color="primary"
           variant="contained"
           onClick={onCreateClick}
           style={{
-            backgroundColor: "blue",
-            color: "white",
             marginRight: "2vw",
           }}
         >

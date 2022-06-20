@@ -1,20 +1,20 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 export default function BasicSelect(props) {
   const {
     rolloutInfo,
     setRolloutInfo,
     dropdownProperty,
-    dropdownItems, 
+    dropdownItems,
     dropdownStyle,
-    propertyMapping 
-  } = props
-  
+    propertyMapping,
+  } = props;
+
   // const textFieldColor = "black";
   // const textFieldSX = {
   //   input: {
@@ -22,7 +22,7 @@ export default function BasicSelect(props) {
   //     color: `${textFieldColor} !important`,
   //   },
   // };
-  
+
   return (
     <Box style={dropdownStyle.box}>
       <InputLabel id="demo-simple-select-label" required>

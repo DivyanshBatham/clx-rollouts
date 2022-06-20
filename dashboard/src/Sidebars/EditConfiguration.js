@@ -10,14 +10,13 @@ const useStyles = {
 };
 
 export default function EditConfiguration() {
-  const [open, setOpen] = React.useState(false);
   const [reqError, setReqError] = React.useState({
     object_uid: false,
     value: false,
   });
 
   const [rolloutConfigInfo, setRolloutConfigInfo] = React.useState({
-    object_uid: ['abcd', 'efgh'],
+    object_uid: ["abcd", "efgh"],
     value: "Java",
     rolloutStartRange: 5,
     rolloutEndRange: 10,
@@ -38,7 +37,7 @@ export default function EditConfiguration() {
     // ask for confirmation using validation popup
     // TO DO: make api call to delete the object
   };
-  
+
   const onSaveClick = () => {
     if (rolloutConfigInfo.object_uid === [] || rolloutConfigInfo.value === "") {
       // Error : Fill required information
@@ -90,21 +89,17 @@ export default function EditConfiguration() {
     marginLeft: "10%",
   };
 
-  const toggleSlider = () => {
-    setOpen(!open);
-  };
-
   return (
     <Box style={useStyles} component="div">
       <div
         style={{
-          backgroundColor: "#1650E8",
+          backgroundColor: "#ACCBF7",
           marginTop: "0px",
         }}
       >
         <h1
           style={{
-            color: "white",
+            color: "#2d81f7",
             textAlign: "center",
             paddingTop: "1vw",
             paddingBottom: "1vw",
@@ -129,11 +124,10 @@ export default function EditConfiguration() {
         style={{ alignItems: "right", marginTop: "1.5vw", marginLeft: "37vw" }}
       >
         <Button
+          color="primary"
           variant="contained"
           onClick={onSaveClick}
           style={{
-            backgroundColor: "blue",
-            color: "white",
             marginRight: "2vw",
           }}
         >

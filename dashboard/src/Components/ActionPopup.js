@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 // props will have info about heading, details
 export default function ActionPopup(props) {
-  const { open, setOpen, heading, details, agreeText, disagreeText} = props;
+  const { open, setOpen, heading, details, agreeText, disagreeText } = props;
 
   const handleClose = () => {
     setOpen(false);
@@ -27,7 +27,7 @@ export default function ActionPopup(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-          {details}
+            {details}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

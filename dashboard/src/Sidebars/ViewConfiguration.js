@@ -9,15 +9,13 @@ const useStyles = {
   height: "100%",
 };
 
-export default function ViewConfiguration() {
-  const [open, setOpen] = React.useState(false);
+export default function ViewConfiguration(props) {
+  const {setViewConfigOpen, setEditConfigOpen} = props
   const [reqError, setReqError] = React.useState({
     object_uid: false,
     value: false,
   });
 
-  
-  
   // TO DO: Get info using API calls
   const [rolloutConfigInfo, setRolloutConfigInfo] = React.useState({
     object_uid: ["abcd", "efgh"],
@@ -34,9 +32,12 @@ export default function ViewConfiguration() {
   };
 
   const onEditClick = () => {
-    // TO DO : open the edit side bar 
-    console.log('Edit button clicked')
-    setOpen(false)
+    // TO DO : open the edit sidebar 
+    console.log('Edit config button clicked');
+    setViewConfigOpen(false);
+    setTimeout(() => {
+      setEditConfigOpen(true);
+    }, 500);
   };
   
   function createFormData(property, isTextField, isRequired) {
@@ -62,21 +63,17 @@ export default function ViewConfiguration() {
     marginLeft: "10%",
   };
 
-  const toggleSlider = () => {
-    setOpen(!open);
-  };
-
   return (
     <Box style={useStyles} component="div">
       <div
         style={{
-          backgroundColor: "#1650E8",
+          backgroundColor: "#ACCBF7",
           marginTop: "0px",
         }}
       >
         <h1
           style={{
-            color: "white",
+            color: "#2d81f7",
             textAlign: "center",
             paddingTop: "1vw",
             paddingBottom: "1vw",
@@ -94,17 +91,14 @@ export default function ViewConfiguration() {
         textFieldStyle={textFieldStyle}
         dropdownStyle={dropdownStyle}
         propertyMapping={propertyMapping}
-        disableField = {true}
+        disableField={true}
       />
-      <div
-        style={{ alignItems: "right", marginLeft: "34.5vw" }}
-      >
+      <div style={{ alignItems: "right", marginLeft: "34.5vw" }}>
         <Button
+          color="primary"
           variant="contained"
           onClick={onEditClick}
           style={{
-            backgroundColor: "blue",
-            color: "white",
             marginRight: "2vw",
           }}
         >

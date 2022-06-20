@@ -10,7 +10,6 @@ const useStyles = {
 };
 
 export default function CreateRollout() {
-  const [open, setOpen] = React.useState(false);
   const [reqError, setReqError] = React.useState({
     rolloutName: false,
     description: false,
@@ -114,21 +113,17 @@ export default function CreateRollout() {
     },
   };
 
-  const toggleSlider = () => {
-    setOpen(!open);
-  };
-
   return (
-    <Box style = {useStyles} component="div">
+    <Box style={useStyles} component="div">
       <div
         style={{
-          backgroundColor: "#1650E8",
+          backgroundColor: "#ACCBF7",
           marginTop: "0px",
         }}
       >
         <h1
           style={{
-            color: "white",
+            color: "#2d81f7",
             textAlign: "center",
             paddingTop: "1vw",
             paddingBottom: "1vw",
@@ -152,11 +147,10 @@ export default function CreateRollout() {
         style={{ alignItems: "right", marginTop: "1.5vw", marginLeft: "40vw" }}
       >
         <Button
+          color="primary"
           variant="contained"
           onClick={onCreateClick}
           style={{
-            backgroundColor: "blue",
-            color: "white",
             marginRight: "2vw",
           }}
         >

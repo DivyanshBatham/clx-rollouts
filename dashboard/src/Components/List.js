@@ -8,13 +8,20 @@ import ListItem from "./ListItem";
 
 export default function CustomizedTables(props) {
   return (
-    <TableContainer component={Paper} style = {{width: '90%', marginLeft: '5%'}}>
+    <TableContainer
+      component={Paper}
+      style={{ width: "90%", marginLeft: "5%" }}
+    >
       {/* Receive the experiment name as prop */}
       <Table aria-label="customized table">
         <TableHead></TableHead>
         <TableBody>
           {props.dummyDetails.map((row) => (
-            <ListItem {...row} propertyStyle = {props.propertyStyle} detailStyle = {props.detailStyle}  />
+            <ListItem
+              {...row}
+              propertyStyle={props.propertyStyle}
+              detailStyle={props.detailStyle}
+            />
           ))}
         </TableBody>
       </Table>
