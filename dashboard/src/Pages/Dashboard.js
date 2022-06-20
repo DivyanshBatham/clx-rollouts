@@ -10,7 +10,8 @@ import AddButton from "../Components/AddButton";
 import Search from "../Components/Search";
 import FilterDropDown from "../Components/FilterDropDown"
 import RolloutTable from "../Components/RolloutTable";
-
+import CreateRollout from "../Sidebars/CreateRollout"
+import ViewRollout from "../Sidebars/ViewRollout"
 const useStyles = {
     width: "50vw",
     background: "white",
@@ -19,24 +20,24 @@ const useStyles = {
 
 export default function Dashboard() {
   // const classes = useStyles();
-  const [open, setOpen] = useState(false);
-
-  const toggleSlider = () => {
-    setOpen(!open);
+  const [createRolloutOpen, setCreateRolloutOpen] = useState(false);
+  const [viewRolloutOpen, setViewRolloutOpen] = useState(false);
+  const [createConfigOpen, setCreateConfigOpen] = useState(false);
+  const [viewConfigOpen, setViewConfigOpen] = useState(false);
+  const [editRolloutOpen, setEditRolloutOpen] = useState(false);
+  const [editConfigOpen, setEditConfigOpen] = useState(false);
+  
+  const toggleCreateRolloutSlider = () => {
+    setCreateRolloutOpen(!createRolloutOpen);
+  };
+  const toggleViewRolloutSlider = () => {
+    setViewRolloutOpen(!viewRolloutOpen);
   };
 
-  const sideList = () => (
-    <Box style={useStyles} component="div">
-      <div
-        style={{
-          backgroundColor: "#1650E8",
-          alignItems: "center"
-        }}
-      >
-        <h1> Create a New Rollout</h1>
-      </div>
-    </Box>
-  );
+  const handleRolloutClick = (index) => {
+    (index) => console.log(rows[index].name + " got clicked");
+    toggleViewRolloutSlider();
+  }
   const options = ["Live","Cancelled","Paused","Failed","Created","Success"];
   const [currentOption,setCurrentOption] = useState(options[0]);
   const rows = [
@@ -75,23 +76,56 @@ export default function Dashboard() {
             </Box>
             <Box m={2}>
               <AddButton 
-                style = {{color : "#08bd80"}}
-                handleClick={toggleSlider} />
+                handleClick={toggleCreateRolloutSlider} />
             </Box>
             <Drawer
-              open={open}
+              open={createRolloutOpen}
               anchor="right"
-              onClose={toggleSlider}
+              onClose={toggleCreateRolloutSlider}
             >
-              {sideList()}
+              {CreateRollout()}
             </Drawer>
+
+            <Drawer
+              open={viewRolloutOpen}
+              anchor="right"
+              onClose={toggleViewRolloutSlider}
+            >
+              <ViewRollout />
+            </Drawer>
+
+            <Drawer
+              open={editRolloutOpen}
+              anchor="right"
+              onClose={() => setEditRolloutOpen(false)}
+            >
+              <ViewRollout />
+            </Drawer>
+
+            <Drawer
+              open={viewRolloutOpen}
+              anchor="right"
+              onClose={toggleViewRolloutSlider}
+            >
+              <ViewRollout />
+            </Drawer>
+
+            <Drawer
+              open={viewRolloutOpen}
+              anchor="right"
+              onClose={toggleViewRolloutSlider}
+            >
+              <ViewRollout />
+            </Drawer>
+
+
           </Toolbar>
         </AppBar>
       </Box>
       <RolloutTable
         options = {options}
         rows = {rows}
-        onRolloutClick = {(index) => console.log(rows[index].name + " got clicked")}
+        onRolloutClick = {(index) => handleRolloutClick(index)}
         rolloutOnChange = {(index,optionIndex) => console.log(rows[index].name + " got "+ options[optionIndex])}
       />
     </>

@@ -11,7 +11,7 @@ import Slide from "@mui/material/Slide";
 function BasicSelect(props) {
     const {dropdownProperty, dropdownItems, setIndex} = props
       return (
-        <Box>
+        <Box style = {{width : "15vw"}}>
           <FormControl fullWidth required>
             <InputLabel id="demo-simple-select-label">{dropdownProperty}</InputLabel>
             <Select
