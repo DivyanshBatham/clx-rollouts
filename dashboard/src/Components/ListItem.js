@@ -1,10 +1,10 @@
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 
 
 export default function ListItem(props) {
   return (
-    <TableRow key={props.property} >
+    <TableRow key={props.property} style = {{border: '1px solid black'}} >
       <TableCell
         style={props.propertyStyle}
         component="th"

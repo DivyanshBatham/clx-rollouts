@@ -1,17 +1,16 @@
 import React from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import Paper from "@material-ui/core/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import Paper from "@mui/material/Paper";
 import ListItem from "./ListItem";
 
 export default function CustomizedTables(props) {
-  const classes = props.tableStyles;
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style = {{width: '90%', marginLeft: '5%'}}>
       {/* Receive the experiment name as prop */}
-      <Table className={classes.table} aria-label="customized table">
+      <Table aria-label="customized table">
         <TableHead></TableHead>
         <TableBody>
           {props.dummyDetails.map((row) => (

@@ -1,33 +1,33 @@
 import * as React from 'react';
-import Box from '@material-ui/core/Box';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 export default function BasicSelect(props) {
-//   const [age, setAge] = React.useState('');
+  const {
+    rolloutInfo,
+    setRolloutInfo,
+    dropdownProperty,
+    dropdownItems, 
+    dropdownStyle,
+    propertyMapping 
+  } = props
   
-//   const handleChange = (event) => {
-//     setAge(event.target.value);
-//   };
-
   return (
-    <Box style = {props.dropdownStyle.box}>
-      <FormControl fullWidth required>
-        <InputLabel id="demo-simple-select-label">{props.dropdownProperty}</InputLabel>
+    <Box style = {dropdownStyle.box}>
+      <FormControl fullWidth required error = {props.reqError[propertyMapping[dropdownProperty]]}>
+        <InputLabel id="demo-simple-select-label">{dropdownProperty}</InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select"
-        //   value={age}
-          label={props.dropdownProperty}
-        //   onChange={handleChange}
-          style={props.dropdownStyle.dropdown}
+          value={rolloutInfo[propertyMapping[dropdownProperty]]}
+          label={dropdownProperty}
+          onChange = {(e) => setRolloutInfo({...rolloutInfo, [propertyMapping[dropdownProperty]] : e.target.value})}
+          style={dropdownStyle.dropdown}
         >
-            <MenuItem value="">
-            <em>None</em>
-            </MenuItem>
-            {props.dropdownItems.map((item, index) => {
+            {dropdownItems.map((item, index) => {
                 return(
                     <MenuItem value = {item} key = {index}>{item}</MenuItem>
                 )
