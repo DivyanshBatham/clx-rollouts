@@ -1,20 +1,37 @@
-import SearchBar from "material-ui-search-bar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import SearchIcon from "@mui/icons-material/Search";
+import TextField from '@mui/material/TextField';
+import InputAdornment from "@mui/material/InputAdornment"
+
 export default function Search(props) {
+
+  const {searchText, setSearchText, onSearch} = props;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSearch();
+    setSearchText("");
+  }
   return (
-    <div style={props.style}>
-      <SearchBar
-        className="search"
-        value={props.searchText}
-        onChange={(value) => props.setSearchText(value)}
+  <div style={props.style}>
+    <form onSubmit={handleSubmit}>
+      <TextField
+        id="search-bar"
+        className="text"
+        value = {searchText}
+        onInput={(e) => {
+        setSearchText(e.target.value);
+        }}
+        variant="outlined"
         placeholder="Search..."
-        closeIcon={
-          <IconButton onClick={() => props.setSearchText("")}>
-            <CloseIcon />
-          </IconButton>
-        }
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <SearchIcon />
+            </InputAdornment>
+          )
+        }}
+        fullWidth
       />
-    </div>
+    </form>
+  </div>
   );
 }
