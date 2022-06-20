@@ -15,23 +15,46 @@ export default function BasicSelect(props) {
     propertyMapping 
   } = props
   
+  // const textFieldColor = "black";
+  // const textFieldSX = {
+  //   input: {
+  //     "-webkit-text-fill-color": `${textFieldColor} !important`,
+  //     color: `${textFieldColor} !important`,
+  //   },
+  // };
+  
   return (
-    <Box style = {dropdownStyle.box}>
-      <FormControl fullWidth required error = {props.reqError[propertyMapping[dropdownProperty]]}>
-        <InputLabel id="demo-simple-select-label">{dropdownProperty}</InputLabel>
+    <Box style={dropdownStyle.box}>
+      <InputLabel id="demo-simple-select-label" required>
+        {dropdownProperty}
+      </InputLabel>
+      <FormControl
+        disabled={props.disabled}
+        fullWidth
+        required
+        error={props.reqError[propertyMapping[dropdownProperty]]}
+      >
         <Select
+          // sx={textFieldSX}
+          placeholder={dropdownProperty}
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select"
           value={rolloutInfo[propertyMapping[dropdownProperty]]}
-          label={dropdownProperty}
-          onChange = {(e) => setRolloutInfo({...rolloutInfo, [propertyMapping[dropdownProperty]] : e.target.value})}
+          onChange={(e) =>
+            setRolloutInfo({
+              ...rolloutInfo,
+              [propertyMapping[dropdownProperty]]: e.target.value,
+            })
+          }
           style={dropdownStyle.dropdown}
         >
-            {dropdownItems.map((item, index) => {
-                return(
-                    <MenuItem value = {item} key = {index}>{item}</MenuItem>
-                )
-            })}
+          {dropdownItems.map((item, index) => {
+            return (
+              <MenuItem value={item} key={index}>
+                {item}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
     </Box>
