@@ -9,8 +9,7 @@ const useStyles = {
     height: "100%",
   };
 
-export default function Playground() {
-  const [open, setOpen] = React.useState(false);
+export default function Playground(props) {
   const [reqError, setReqError] = React.useState({
     rolloutName: false,
     description: false,
@@ -61,7 +60,7 @@ export default function Playground() {
     } else {
       // request to backend to create new  rollout
       console.log("Changes saved sucessfully");
-      setOpen(false);
+      props.setEditRolloutOpen(false);
       setRolloutInfo({
         ...rolloutInfo,
         rolloutName: "",

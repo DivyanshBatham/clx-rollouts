@@ -18,15 +18,10 @@ import ViewConfig from "../Sidebars/ViewConfiguration";
 import CreateConfig from "../Sidebars/CreateConfiguration";
 import EditConfig from "../Sidebars/EditConfiguration";
 import { ReactComponent as UnacademyLogo } from "../Assets/Unacademy-logo.svg";
-
-const useStyles = {
-  width: "50vw",
-  background: "white",
-  height: "100%",
-};
+import Pagination from "@mui/material/Pagination";
+import usePagination from "../Utils/Pagination";
 
 export default function Dashboard() {
-  // const classes = useStyles();
   const [createRolloutOpen, setCreateRolloutOpen] = useState(false);
   const [viewRolloutOpen, setViewRolloutOpen] = useState(false);
   const [createConfigOpen, setCreateConfigOpen] = useState(false);
@@ -34,6 +29,7 @@ export default function Dashboard() {
   const [editRolloutOpen, setEditRolloutOpen] = useState(false);
   const [editConfigOpen, setEditConfigOpen] = useState(false);
   const [isConfigured, setIsConfigured] = useState(false);
+  let [page, setPage] = useState(1);
 
   const toggleCreateRolloutSlider = () => {
     setCreateRolloutOpen(!createRolloutOpen);
@@ -89,6 +85,34 @@ export default function Dashboard() {
       updatedAt: "13-07-2002",
       status: "Success",
     },
+    {
+      name: "sadc",
+      createdBy: "Venu",
+      createdAt: "13-07-2002",
+      updatedAt: "13-07-2002",
+      status: "Success",
+    },
+    {
+      name: "abdshwbehwbadc",
+      createdBy: "Venu",
+      createdAt: "13-07-2002",
+      updatedAt: "13-07-2002",
+      status: "Success",
+    },
+    {
+      name: "awbadc",
+      createdBy: "Venu",
+      createdAt: "13-07-2002",
+      updatedAt: "13-07-2002",
+      status: "Success",
+    },
+    {
+      name: "abehwbadc",
+      createdBy: "Venu",
+      createdAt: "13-07-2002",
+      updatedAt: "13-07-2002",
+      status: "Success",
+    },
   ];
   const [searchText, setSearchText] = useState("");
   const filters = [
@@ -117,118 +141,145 @@ export default function Dashboard() {
   const onFilterApply = () => {
     console.log(selectedFilters);
   };
+
+  const PER_PAGE = 5;
+  const count = Math.ceil(rows.length / PER_PAGE);
+  const _DATA = usePagination(rows, PER_PAGE);
+
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
+
   return (
     <>
-      <CssBaseline />
-      <Box component="nav">
-        <AppBar position="static" style={{ backgroundColor: "#ACCBF7" }}>
-          <Toolbar>
-            <UnacademyLogo
-              width={182}
-              height={64}
-              style={{ marginLeft: "1vw" }}
-            />
-            <Typography
-              variant="h4"
-              style={{
-                marginLeft: "1vw",
-                color: "#2d81f7",
-                fontWeight: "Bold",
-              }}
-            >
-              Rollouts
-            </Typography>
-            <Search
-              style={{ marginLeft: "15vw", width: "30vw" }}
-              searchText={searchText}
-              setSearchText={setSearchText}
-              onSearch={() => console.log(searchText + " is searched.")}
-            />
-            <FilterDropDown
-              style={{ marginLeft: "15vw" }}
-              filters={filters}
-              selectedFilters={selectedFilters}
-              setSelectedFilters={setSelectedFilters}
-              onApply={onFilterApply}
-            />
-            <AddButton
-              style={{ marginLeft: "2vw" }}
-              toolTipTitle="Add a new Rollout"
-              handleClick={toggleCreateRolloutSlider}
-            />
-            <Drawer
-              open={createRolloutOpen}
-              anchor="right"
-              onClose={toggleCreateRolloutSlider}
-            >
-              {CreateRollout()}
-            </Drawer>
-
-            <Drawer
-              open={viewRolloutOpen}
-              anchor="right"
-              onClose={toggleViewRolloutSlider}
-            >
-              <ViewRollout
-                setEditRolloutOpen={setEditRolloutOpen}
-                setViewRolloutOpen={setViewRolloutOpen}
-                setViewConfigOpen={setViewConfigOpen}
-                isConfigured={isConfigured}
-                setCreateConfigOpen={setCreateConfigOpen}
+        <CssBaseline />
+        <Box component="nav">
+          <AppBar position="static" style={{ backgroundColor: "#ACCBF7" }}>
+            <Toolbar>
+              <UnacademyLogo
+                width={182}
+                height={64}
+                style={{ marginLeft: "1vw" }}
               />
-            </Drawer>
-
-            <Drawer
-              open={editRolloutOpen}
-              anchor="right"
-              onClose={() => setEditRolloutOpen(false)}
-            >
-              <EditRollout setEditRolloutOpen={setEditRolloutOpen} />
-            </Drawer>
-
-            <Drawer
-              open={viewConfigOpen}
-              anchor="right"
-              onClose={() => setViewConfigOpen(false)}
-            >
-              <ViewConfig
-                setEditConfigOpen={setEditConfigOpen}
-                setViewConfigOpen={setViewConfigOpen}
+              <Typography
+                variant="h4"
+                style={{
+                  marginLeft: "1vw",
+                  color: "#2d81f7",
+                  fontWeight: "Bold",
+                }}
+              >
+                Rollouts
+              </Typography>
+              <Search
+                style={{ marginLeft: "15vw", width: "30vw" }}
+                searchText={searchText}
+                setSearchText={setSearchText}
+                onSearch={() => console.log(searchText + " is searched.")}
               />
-            </Drawer>
+              <FilterDropDown
+                style={{ marginLeft: "15vw" }}
+                filters={filters}
+                selectedFilters={selectedFilters}
+                setSelectedFilters={setSelectedFilters}
+                onApply={onFilterApply}
+              />
+              <AddButton
+                style={{ marginLeft: "2vw" }}
+                toolTipTitle="Add a new Rollout"
+                handleClick={toggleCreateRolloutSlider}
+              />
+              <Drawer
+                open={createRolloutOpen}
+                anchor="right"
+                onClose={toggleCreateRolloutSlider}
+              >
+                {CreateRollout()}
+              </Drawer>
 
-            <Drawer
-              open={createConfigOpen}
-              anchor="right"
-              onClose={() => setCreateConfigOpen(false)}
-            >
-              <CreateConfig />
-            </Drawer>
-            <Drawer
-              open={editConfigOpen}
-              anchor="right"
-              onClose={() => setEditConfigOpen(false)}
-            >
-              <EditConfig />
-            </Drawer>
-          </Toolbar>
-        </AppBar>
-      </Box>
-      <RolloutTable
+              <Drawer
+                open={viewRolloutOpen}
+                anchor="right"
+                onClose={toggleViewRolloutSlider}
+              >
+                <ViewRollout
+                  setEditRolloutOpen={setEditRolloutOpen}
+                  setViewRolloutOpen={setViewRolloutOpen}
+                  setViewConfigOpen={setViewConfigOpen}
+                  isConfigured={isConfigured}
+                  setCreateConfigOpen={setCreateConfigOpen}
+                />
+              </Drawer>
+
+              <Drawer
+                open={editRolloutOpen}
+                anchor="right"
+                onClose={() => setEditRolloutOpen(false)}
+              >
+                <EditRollout setEditRolloutOpen={setEditRolloutOpen} />
+              </Drawer>
+
+              <Drawer
+                open={viewConfigOpen}
+                anchor="right"
+                onClose={() => setViewConfigOpen(false)}
+              >
+                <ViewConfig
+                  setEditConfigOpen={setEditConfigOpen}
+                  setViewConfigOpen={setViewConfigOpen}
+                />
+              </Drawer>
+
+              <Drawer
+                open={createConfigOpen}
+                anchor="right"
+                onClose={() => setCreateConfigOpen(false)}
+              >
+                <CreateConfig />
+              </Drawer>
+              <Drawer
+                open={editConfigOpen}
+                anchor="right"
+                onClose={() => setEditConfigOpen(false)}
+              >
+                <EditConfig />
+              </Drawer>
+            </Toolbar>
+          </AppBar>
+        </Box>
+        <RolloutTable
+          style={{
+            marginTop: "2vh",
+            marginLeft: "1vw",
+            marginRight: "1vw",
+            border: "3px #ACCBF7 solid",
+            borderRadius: "10px",
+          }}
+          options={options}
+          rows={_DATA.currentData()}
+          onRolloutClick={(index) => handleRolloutClick(index)}
+          rolloutOnChange={(index, optionIndex) =>
+            console.log(rows[index].name + " got " + options[optionIndex])
+          }
+        />
+      <div
         style={{
-          marginTop: "2vh",
-          marginLeft: "1vw",
-          marginRight: "1vw",
-          border: "3px #ACCBF7 solid",
-          borderRadius: "10px",
+          marginTop: "1vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-        options={options}
-        rows={rows}
-        onRolloutClick={(index) => handleRolloutClick(index)}
-        rolloutOnChange={(index, optionIndex) =>
-          console.log(rows[index].name + " got " + options[optionIndex])
-        }
-      />
+      >
+        <Pagination
+          count={count}
+          size="large"
+          page={page}
+          variant="outlined"
+          shape="rounded"
+          onChange={handleChange}
+        />
+      </div>
     </>
   );
 }
