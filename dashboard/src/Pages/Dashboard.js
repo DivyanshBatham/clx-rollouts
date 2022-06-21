@@ -3,7 +3,9 @@ import {
   AppBar,
   Toolbar,
   Box,
+  Container,
   CssBaseline,
+  Stack,
   Drawer,
   Typography,
 } from "@mui/material";
@@ -20,6 +22,7 @@ import EditConfig from "../Sidebars/EditConfiguration";
 import { ReactComponent as UnacademyLogo } from "../Assets/Unacademy-logo.svg";
 import Pagination from "@mui/material/Pagination";
 import usePagination from "../Utils/Pagination";
+import Navbar from "../Components/Navbar";
 
 export default function Dashboard() {
   const [createRolloutOpen, setCreateRolloutOpen] = useState(false);
@@ -47,71 +50,36 @@ export default function Dashboard() {
     (index) => console.log(rows[index].name + " got clicked");
     toggleViewRolloutSlider();
   };
-  const options = [
-    "Live",
-    "Cancelled",
-    "Paused",
-    "Failed",
-    "Created",
-    "Success",
-  ];
+  const options = ["Paused", "Failed", "Success"];
   const [currentOption, setCurrentOption] = useState(options[0]);
   const rows = [
     {
-      name: "abc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Live",
+      id: 1,
+      description: "Fifth",
+      rollout_type: 1,
+      rollout_name: "Fifth rollout",
+      rollout_status: 1,
+      rollout_level: 2,
+      created_at: "2022-06-21T06:34:23.580759Z",
+      updated_at: null,
+      start_time: null,
+      end_time: null,
+      is_active: true,
+      created_by: "venu",
     },
     {
-      name: "adsbc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Live",
-    },
-    {
-      name: "abdsac",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Cancelled",
-    },
-    {
-      name: "abdsadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "sadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "abdshwbehwbadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "awbadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "abehwbadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
+      id: 2,
+      description: "Fifth",
+      rollout_type: 2,
+      rollout_name: "Fifth rollout",
+      rollout_status: 1,
+      rollout_level: 2,
+      created_at: "2022-06-21T08:49:20.462872Z",
+      updated_at: null,
+      start_time: null,
+      end_time: null,
+      is_active: true,
+      created_by: "venu",
     },
   ];
   const [searchText, setSearchText] = useState("");
@@ -133,6 +101,14 @@ export default function Dashboard() {
       filterOptions: ["All", "Goal", "Class", "Educator", "Course"],
     },
   ];
+  const nextStatusOptions = {
+    0: [1, 2],
+    1: [2, 4, 5],
+    2: [],
+    3: [],
+    4: [],
+    5: [1, 3],
+  };
   const [selectedFilters, setSelectedFilters] = useState({
     status: 0,
     type: 0,
@@ -153,106 +129,101 @@ export default function Dashboard() {
 
   return (
     <>
-        <CssBaseline />
-        <Box component="nav">
-          <AppBar position="static" style={{ backgroundColor: "#ACCBF7" }}>
-            <Toolbar>
-              <UnacademyLogo
-                width={182}
-                height={64}
-                style={{ marginLeft: "1vw" }}
-              />
-              <Typography
-                variant="h4"
-                style={{
-                  marginLeft: "1vw",
-                  color: "#2d81f7",
-                  fontWeight: "Bold",
-                }}
-              >
-                Rollouts
-              </Typography>
-              <Search
-                style={{ marginLeft: "15vw", width: "30vw" }}
-                searchText={searchText}
-                setSearchText={setSearchText}
-                onSearch={() => console.log(searchText + " is searched.")}
-              />
-              <FilterDropDown
-                style={{ marginLeft: "15vw" }}
-                filters={filters}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-                onApply={onFilterApply}
-              />
-              <AddButton
-                style={{ marginLeft: "2vw" }}
-                toolTipTitle="Add a new Rollout"
-                handleClick={toggleCreateRolloutSlider}
-              />
-              <Drawer
-                open={createRolloutOpen}
-                anchor="right"
-                onClose={toggleCreateRolloutSlider}
-              >
-                {CreateRollout()}
-              </Drawer>
+      <CssBaseline />
+      <Navbar />
+      <Container maxWidth="lg">
+        <Stack
+          style={{
+            marginTop: "2vh",
+          }}
+          direction="row"
+          spacing={123}
+        >
+          <Typography variant="h4">Rollouts</Typography>
+          <AddButton
+            toolTipTitle="Add a new Rollout"
+            handleClick={toggleCreateRolloutSlider}
+          />
+        </Stack>
+        <Stack
+          style={{
+            marginTop: "2vh",
+          }}
+          direction="row"
+          spacing={62}
+        >
+          <Search
+            style={{ width: "30vw" }}
+            searchText={searchText}
+            setSearchText={setSearchText}
+            onSearch={() => console.log(searchText + " is searched.")}
+          />
+          <FilterDropDown
+            style={{ marginTop: "1vh" }}
+            filters={filters}
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+            onApply={onFilterApply}
+          />
+        </Stack>
+        <Drawer
+          open={createRolloutOpen}
+          anchor="right"
+          onClose={toggleCreateRolloutSlider}
+        >
+          {CreateRollout()}
+        </Drawer>
 
-              <Drawer
-                open={viewRolloutOpen}
-                anchor="right"
-                onClose={toggleViewRolloutSlider}
-              >
-                <ViewRollout
-                  setEditRolloutOpen={setEditRolloutOpen}
-                  setViewRolloutOpen={setViewRolloutOpen}
-                  setViewConfigOpen={setViewConfigOpen}
-                  isConfigured={isConfigured}
-                  setCreateConfigOpen={setCreateConfigOpen}
-                />
-              </Drawer>
+        <Drawer
+          open={viewRolloutOpen}
+          anchor="right"
+          onClose={toggleViewRolloutSlider}
+        >
+          <ViewRollout
+            setEditRolloutOpen={setEditRolloutOpen}
+            setViewRolloutOpen={setViewRolloutOpen}
+            setViewConfigOpen={setViewConfigOpen}
+            isConfigured={isConfigured}
+            setCreateConfigOpen={setCreateConfigOpen}
+          />
+        </Drawer>
 
-              <Drawer
-                open={editRolloutOpen}
-                anchor="right"
-                onClose={() => setEditRolloutOpen(false)}
-              >
-                <EditRollout setEditRolloutOpen={setEditRolloutOpen} />
-              </Drawer>
+        <Drawer
+          open={editRolloutOpen}
+          anchor="right"
+          onClose={() => setEditRolloutOpen(false)}
+        >
+          <EditRollout setEditRolloutOpen={setEditRolloutOpen} />
+        </Drawer>
 
-              <Drawer
-                open={viewConfigOpen}
-                anchor="right"
-                onClose={() => setViewConfigOpen(false)}
-              >
-                <ViewConfig
-                  setEditConfigOpen={setEditConfigOpen}
-                  setViewConfigOpen={setViewConfigOpen}
-                />
-              </Drawer>
+        <Drawer
+          open={viewConfigOpen}
+          anchor="right"
+          onClose={() => setViewConfigOpen(false)}
+        >
+          <ViewConfig
+            setEditConfigOpen={setEditConfigOpen}
+            setViewConfigOpen={setViewConfigOpen}
+          />
+        </Drawer>
 
-              <Drawer
-                open={createConfigOpen}
-                anchor="right"
-                onClose={() => setCreateConfigOpen(false)}
-              >
-                <CreateConfig />
-              </Drawer>
-              <Drawer
-                open={editConfigOpen}
-                anchor="right"
-                onClose={() => setEditConfigOpen(false)}
-              >
-                <EditConfig />
-              </Drawer>
-            </Toolbar>
-          </AppBar>
-        </Box>
+        <Drawer
+          open={createConfigOpen}
+          anchor="right"
+          onClose={() => setCreateConfigOpen(false)}
+        >
+          <CreateConfig />
+        </Drawer>
+        <Drawer
+          open={editConfigOpen}
+          anchor="right"
+          onClose={() => setEditConfigOpen(false)}
+        >
+          <EditConfig />
+        </Drawer>
         <RolloutTable
           style={{
             marginTop: "2vh",
-            marginLeft: "1vw",
-            marginRight: "1vw",
             border: "3px #ACCBF7 solid",
             borderRadius: "10px",
           }}
@@ -263,23 +234,24 @@ export default function Dashboard() {
             console.log(rows[index].name + " got " + options[optionIndex])
           }
         />
-      <div
-        style={{
-          marginTop: "1vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Pagination
-          count={count}
-          size="large"
-          page={page}
-          variant="outlined"
-          shape="rounded"
-          onChange={handleChange}
-        />
-      </div>
+        <div
+          style={{
+            marginTop: "1vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination
+            count={count}
+            size="large"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
+        </div>
+      </Container>
     </>
   );
 }
