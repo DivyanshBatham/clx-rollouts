@@ -14,29 +14,59 @@ export default function RolloutTable(props) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Created By</TableCell>
-              <TableCell align="center">Created at</TableCell>
-              <TableCell align="center">updated at</TableCell>
-              <TableCell align="center">Status</TableCell>
+              <TableCell style={{ fontWeight: "bold" }} align="center">
+                Name
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold" }} align="center">
+                Created By
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold" }} align="center">
+                Created At
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold" }} align="center">
+                Updated At
+              </TableCell>
+              <TableCell style={{ fontWeight: "bold" }} align="center">
+                Status
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
               <TableRow key={row.name} hover>
-                <TableCell onClick={() => onRolloutClick(index)} align="center">
+                <TableCell
+                  onClick={() => onRolloutClick(index)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
                   {row.name}
                 </TableCell>
-                <TableCell onClick={() => onRolloutClick(index)} align="center">
+                <TableCell
+                  onClick={() => onRolloutClick(index)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
                   {row.createdBy}
                 </TableCell>
-                <TableCell onClick={() => onRolloutClick(index)} align="center">
+                <TableCell
+                  onClick={() => onRolloutClick(index)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
                   {row.createdAt}
                 </TableCell>
-                <TableCell onClick={() => onRolloutClick(index)} align="center">
+                <TableCell
+                  onClick={() => onRolloutClick(index)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
                   {row.updatedAt}
                 </TableCell>
-                <TableCell onClick={() => onRolloutClick(index)} align="center">
+                <TableCell
+                  onClick={() => onRolloutClick(index)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
                   {row.status}
                 </TableCell>
                 <TableCell align="right">

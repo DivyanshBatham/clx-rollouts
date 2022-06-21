@@ -45,8 +45,8 @@ export default function Dashboard() {
   const handleRolloutClick = (index) => {
     // TO DO - check if the configuration for this experiment exists
     // send prop to viewconfig to show the button accordingly
-    if( 1 === 1) {
-      setIsConfigured(true)
+    if (1 === 1) {
+      setIsConfigured(true);
     }
     (index) => console.log(rows[index].name + " got clicked");
     toggleViewRolloutSlider();
@@ -153,6 +153,7 @@ export default function Dashboard() {
             />
             <AddButton
               style={{ marginLeft: "2vw" }}
+              toolTipTitle="Add a new Rollout"
               handleClick={toggleCreateRolloutSlider}
             />
             <Drawer
@@ -214,6 +215,13 @@ export default function Dashboard() {
         </AppBar>
       </Box>
       <RolloutTable
+        style={{
+          marginTop: "2vh",
+          marginLeft: "1vw",
+          marginRight: "1vw",
+          border: "3px #ACCBF7 solid",
+          borderRadius: "10px",
+        }}
         options={options}
         rows={rows}
         onRolloutClick={(index) => handleRolloutClick(index)}

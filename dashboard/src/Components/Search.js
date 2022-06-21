@@ -1,6 +1,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
+import "../styles.css";
 
 export default function Search(props) {
   const { searchText, setSearchText, onSearch } = props;
@@ -14,7 +15,11 @@ export default function Search(props) {
       <form onSubmit={handleSubmit}>
         <TextField
           id="search-bar"
-          className="text"
+          className="inputRounded"
+          style={{
+            backgroundColor: "white",
+            borderRadius: "30px",
+          }}
           value={searchText}
           onInput={(e) => {
             setSearchText(e.target.value);
