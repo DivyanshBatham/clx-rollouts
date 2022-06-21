@@ -33,46 +33,46 @@ export default function RolloutTable(props) {
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRow key={row.name} hover>
+              <TableRow key={row.rollout_name} hover>
                 <TableCell
-                  onClick={() => onRolloutClick(index)}
+                  onClick={() => onRolloutClick(row.id)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
-                  {row.name}
+                  {row.rollout_name}
+                </TableCell>
+                <TableCell
+                  onClick={() => onRolloutClick(row.id)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
+                  {row.created_by}
+                </TableCell>
+                <TableCell
+                  onClick={() => onRolloutClick(row.id)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
+                  {row.created_at}
+                </TableCell>
+                <TableCell
+                  onClick={() => onRolloutClick(row.id)}
+                  style={{ cursor: "pointer" }}
+                  align="center"
+                >
+                  {row.updated_at}
                 </TableCell>
                 <TableCell
                   onClick={() => onRolloutClick(index)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
-                  {row.createdBy}
-                </TableCell>
-                <TableCell
-                  onClick={() => onRolloutClick(index)}
-                  style={{ cursor: "pointer" }}
-                  align="center"
-                >
-                  {row.createdAt}
-                </TableCell>
-                <TableCell
-                  onClick={() => onRolloutClick(index)}
-                  style={{ cursor: "pointer" }}
-                  align="center"
-                >
-                  {row.updatedAt}
-                </TableCell>
-                <TableCell
-                  onClick={() => onRolloutClick(index)}
-                  style={{ cursor: "pointer" }}
-                  align="center"
-                >
-                  {row.status}
+                  {row.rollout_status}
                 </TableCell>
                 <TableCell align="right">
                   <ThreeDotDropDown
                     options={options}
-                    intialOption={row.status}
+                    intialOption={row.rollout_status}
                     onChange={(optionIndex) => {
                       rolloutOnChange(index, optionIndex);
                     }}

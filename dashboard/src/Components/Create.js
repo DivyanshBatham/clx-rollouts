@@ -46,7 +46,7 @@ export default function FormPropsTextFields(props) {
           </div>
         ) : (
           <Dropdown
-            disabled={props.isDisabled}
+            disabled={props.isDisabled || props.editRolloutOpen}
             key={index}
             rolloutInfo={rolloutInfo}
             setRolloutInfo={setRolloutInfo}
