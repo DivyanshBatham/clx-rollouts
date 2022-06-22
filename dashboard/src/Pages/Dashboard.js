@@ -44,6 +44,8 @@ export default function Dashboard() {
     rolloutStartRange: 5,
     rolloutEndRange: 10,
   });
+  const [rolloutId, setRolloutId] = useState("");
+
 
   const TYPE_MAPPING = ["Feature", "Deployment"];
 
@@ -93,12 +95,25 @@ export default function Dashboard() {
         rolloutLevel: LEVEL_MAPPING[res.data["rollout_level"] - 1],
       });
     });
-    if (1 === 2) {
-      setIsConfigured(true);
-    }
+    axios
+      .get(`http://127.0.0.1:8000/rollout/${index}/configuration`)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.length !== 0) {
+          setIsConfigured(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsConfigured(false);
+      });
+    // if (1 === 2) {
+    //   setIsConfigured(true);
+    // }
+    // (index) => console.log(rows[index].name + " got clicked");
     (index) => console.log(rows[index].name + " got clicked");
     toggleViewRolloutSlider();
-  };
+  };;
   const options = [
     "Create",
     "Go Live",
@@ -379,6 +394,7 @@ export default function Dashboard() {
             setRolloutInfo={setRolloutInfo}
             rolloutConfigInfo={rolloutConfigInfo}
             setRolloutConfigInfo={setRolloutConfigInfo}
+            rolloutId={rolloutId}
           />
         </Drawer>
         <Drawer
@@ -403,6 +419,7 @@ export default function Dashboard() {
             setEditConfigOpen={setEditConfigOpen}
             setViewConfigOpen={setViewConfigOpen}
             setCreateConfigOpen={setCreateConfigOpen}
+            rolloutId={rolloutId}
           />
         </Drawer>
         <RolloutTable
@@ -412,7 +429,10 @@ export default function Dashboard() {
           }}
           options={options}
           rows={_DATA.currentData()}
-          onRolloutClick={(index) => handleRolloutClick(index)}
+          onRolloutClick={(index) => {
+            handleRolloutClick(index);
+            setRolloutId(index);
+          }}
           rolloutOnChange={(index, optionIndex) =>
             console.log(
               rows[index].rollout_name + " got " + options[optionIndex]

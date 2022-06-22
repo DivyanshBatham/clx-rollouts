@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Form from "../Components/ConfigForm";
+import axios from "axios";
 
 export default function EditConfiguration(props) {
   const {
@@ -59,7 +60,7 @@ export default function EditConfiguration(props) {
       } else {
         // request to backend to create new  rollout configuration
         console.log("Rollout configuration updated sucessfully");
-        setOpen(false);
+        setEditConfigOpen(false);
         setRolloutConfigInfo({
           ...rolloutConfigInfo,
           object_uid: [],
@@ -89,6 +90,25 @@ export default function EditConfiguration(props) {
       } else {
         // request to backend to create new  rollout configuration
         console.log("New Rollout Configuration created sucessfully");
+        const createInfo = {
+          object_uid:
+            rolloutConfigInfo["object_uid"][
+              rolloutConfigInfo["object_uid"].length - 1
+            ],
+          values: rolloutConfigInfo["value"],
+          rollout_start_range: rolloutConfigInfo["rolloutStartRange"],
+          rollout_end_range: rolloutConfigInfo["rolloutEndRange"],
+        };
+        console.log("before click :", createInfo);
+        axios
+          .post(
+            `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
+            createInfo
+          )
+          .then((res) => {
+            console.log(res);
+            console.log(res.data.message);
+          });
         setCreateConfigOpen(false);
         setRolloutConfigInfo({
           ...rolloutConfigInfo,
@@ -118,7 +138,7 @@ export default function EditConfiguration(props) {
   }
 
   const formData = [
-    createFormData("Object Uid", false, true),
+    createFormData("Object UIDs", false, true),
     createFormData("Value", true, true),
     createFormData("Rollout start range", true, false),
     createFormData("Rollout end range", true, false),

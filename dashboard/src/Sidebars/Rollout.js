@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import Form from "../Components/Create.js";
-import axios from 'axios'
+import axios from "axios";
 
 export default function Playground(props) {
   const {
@@ -17,7 +17,7 @@ export default function Playground(props) {
     rolloutInfo,
     setRolloutInfo,
     rolloutConfigInfo,
-    setRolloutConfigInfo
+    setRolloutConfigInfo,
   } = props;
 
   const [reqError, setReqError] = React.useState({
@@ -26,9 +26,7 @@ export default function Playground(props) {
     rolloutType: false,
     rolloutLevel: false,
   });
-  
-  
-  
+
   const TYPE_MAPPING = {
     Feature: 1,
     Deployment: 2,
@@ -91,6 +89,9 @@ export default function Playground(props) {
 
   const handleClick = () => {
     if (editRolloutOpen) {
+      /**
+       * Validation
+       */
       if (
         rolloutInfo.rolloutName === "" ||
         rolloutInfo.description === "" ||
@@ -112,7 +113,19 @@ export default function Playground(props) {
           setReqError({ ...reqError, rolloutLevel: true });
         }
       } else {
-        // request to backend to create new  rollout
+        const editedInfo = {
+          description: rolloutInfo.description,
+          rollout_name: rolloutInfo.rolloutName,
+          rollout_type: TYPE_MAPPING[rolloutInfo.rolloutType],
+          rollout_level: LEVEL_MAPPING[rolloutInfo.rolloutLevel],
+        };
+
+        axios
+          .put(`http://127.0.0.1:8000/rollout/${props.rolloutId}`, editedInfo)
+          .then((res) => {
+            console.log(res);
+            console.log(res.data.message);
+          });
         console.log("Changes saved sucessfully");
         setEditRolloutOpen(false);
         setRolloutInfo({
@@ -120,7 +133,7 @@ export default function Playground(props) {
           rolloutName: "",
           description: "",
           rolloutType: "",
-          rolloutLevel: ""
+          rolloutLevel: "",
         });
         setReqError({
           ...reqError,
@@ -131,6 +144,9 @@ export default function Playground(props) {
         });
       }
     } else if (createRolloutOpen) {
+      /**
+       * Validation
+       */
       if (
         rolloutInfo.rolloutName === "" ||
         rolloutInfo.description === "" ||
@@ -161,19 +177,17 @@ export default function Playground(props) {
         };
         console.log(createInfo);
         console.log("New Rollout created sucessfully");
-        axios
-          .post(`http://127.0.0.1:8000/rollout`, createInfo)
-          .then((res) => {
-            console.log(res);
-            console.log(res.message);
-          });
+        axios.post(`http://127.0.0.1:8000/rollout`, createInfo).then((res) => {
+          console.log(res);
+          console.log(res.data.message);
+        });
         setCreateRolloutOpen(false);
         setRolloutInfo({
           ...rolloutInfo,
           rolloutName: "",
           description: "",
           rolloutType: "",
-          rolloutLevel: ""
+          rolloutLevel: "",
         });
         setReqError({
           ...reqError,
