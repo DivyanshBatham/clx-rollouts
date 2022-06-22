@@ -397,9 +397,9 @@ export default function Dashboard() {
           }}
           options={options}
           rows={_DATA.currentData()}
-          onRolloutClick={(index) => {
-            handleRolloutClick(index);
-            setRolloutId(index);
+          onRolloutClick={(ID) => {
+            handleRolloutClick(ID);
+            setRolloutId(ID);
           }}
           rolloutOnChange={(index, optionIndex) =>
             console.log(
