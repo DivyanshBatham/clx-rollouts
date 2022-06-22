@@ -18,7 +18,6 @@ export default function Search(props) {
           className="inputRounded"
           style={{
             backgroundColor: "white",
-            borderRadius: "30px",
           }}
           value={searchText}
           onInput={(e) => {

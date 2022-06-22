@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import {
-  AppBar,
-  Toolbar,
   Box,
   Container,
   CssBaseline,
   Stack,
   Drawer,
   Typography,
+  Button,
 } from "@mui/material";
 import AddButton from "../Components/AddButton";
 import Search from "../Components/Search";
@@ -19,10 +18,10 @@ import EditRollout from "../Sidebars/EditRollout";
 import ViewConfig from "../Sidebars/ViewConfiguration";
 import CreateConfig from "../Sidebars/CreateConfiguration";
 import EditConfig from "../Sidebars/EditConfiguration";
-import { ReactComponent as UnacademyLogo } from "../Assets/Unacademy-logo.svg";
 import Pagination from "@mui/material/Pagination";
 import usePagination from "../Utils/Pagination";
 import Navbar from "../Components/Navbar";
+import Filters from "../Components/Filters";
 
 export default function Dashboard() {
   const [createRolloutOpen, setCreateRolloutOpen] = useState(false);
@@ -44,20 +43,27 @@ export default function Dashboard() {
   const handleRolloutClick = (index) => {
     // TO DO - check if the configuration for this experiment exists
     // send prop to viewconfig to show the button accordingly
+    console.log(rows[index].rollout_name + " got clicked");
     if (1 === 1) {
       setIsConfigured(true);
     }
     (index) => console.log(rows[index].name + " got clicked");
     toggleViewRolloutSlider();
   };
-  const options = ["Paused", "Failed", "Success"];
-  const [currentOption, setCurrentOption] = useState(options[0]);
+  const options = [
+    "Create",
+    "Go Live",
+    "Mark it as Success",
+    "Cancel",
+    "Pause",
+    "Mark it as Failure",
+  ];
   const rows = [
     {
       id: 1,
       description: "Fifth",
       rollout_type: 1,
-      rollout_name: "Fifth rollout",
+      rollout_name: "RAH",
       rollout_status: 1,
       rollout_level: 2,
       created_at: "2022-06-21T06:34:23.580759Z",
@@ -71,8 +77,8 @@ export default function Dashboard() {
       id: 2,
       description: "Fifth",
       rollout_type: 2,
-      rollout_name: "Fifth rollout",
-      rollout_status: 1,
+      rollout_name: "AddBookmark",
+      rollout_status: 4,
       rollout_level: 2,
       created_at: "2022-06-21T08:49:20.462872Z",
       updated_at: null,
@@ -87,7 +93,7 @@ export default function Dashboard() {
     {
       filterType: "status",
       filterOptions: [
-        "All",
+        "All Status",
         "Live",
         "Cancelled",
         "Paused",
@@ -95,25 +101,21 @@ export default function Dashboard() {
         "Created",
       ],
     },
-    { filterType: "type", filterOptions: ["All", "Feature", "Deployment"] },
+    {
+      filterType: "type",
+      filterOptions: ["All Types", "Feature", "Deployment"],
+    },
     {
       filterType: "level",
-      filterOptions: ["All", "Goal", "Class", "Educator", "Course"],
+      filterOptions: ["All Levels", "Goal", "Class", "Educator", "Course"],
     },
   ];
-  const nextStatusOptions = {
-    0: [1, 2],
-    1: [2, 4, 5],
-    2: [],
-    3: [],
-    4: [],
-    5: [1, 3],
-  };
   const [selectedFilters, setSelectedFilters] = useState({
     status: 0,
     type: 0,
     level: 0,
   });
+
   const onFilterApply = () => {
     console.log(selectedFilters);
   };
@@ -137,9 +139,11 @@ export default function Dashboard() {
             marginTop: "2vh",
           }}
           direction="row"
-          spacing={123}
+          spacing={113}
         >
-          <Typography variant="h4">Rollouts</Typography>
+          <Typography variant="h4" fontWeight="600">
+            Rollouts
+          </Typography>
           <AddButton
             toolTipTitle="Add a new Rollout"
             handleClick={toggleCreateRolloutSlider}
@@ -150,28 +154,37 @@ export default function Dashboard() {
             marginTop: "2vh",
           }}
           direction="row"
-          spacing={62}
+          spacing={20}
         >
           <Search
-            style={{ width: "30vw" }}
+            style={{ width: "20vw" }}
             searchText={searchText}
             setSearchText={setSearchText}
             onSearch={() => console.log(searchText + " is searched.")}
           />
-          <FilterDropDown
-            style={{ marginTop: "1vh" }}
+          <Filters
             filters={filters}
             selectedFilters={selectedFilters}
             setSelectedFilters={setSelectedFilters}
             onApply={onFilterApply}
           />
+          <Button  variant="outlined" onClick={onFilterApply}>
+            APPLY
+          </Button>
+          {/* <FilterDropDown
+            style={{ marginTop: "1vh" }}
+            filters={filters}
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+            onApply={onFilterApply}
+          /> */}
         </Stack>
         <Drawer
           open={createRolloutOpen}
           anchor="right"
           onClose={toggleCreateRolloutSlider}
         >
-          {CreateRollout()}
+          <CreateRollout />
         </Drawer>
 
         <Drawer
@@ -224,14 +237,15 @@ export default function Dashboard() {
         <RolloutTable
           style={{
             marginTop: "2vh",
-            border: "3px #ACCBF7 solid",
             borderRadius: "10px",
           }}
           options={options}
           rows={_DATA.currentData()}
           onRolloutClick={(index) => handleRolloutClick(index)}
           rolloutOnChange={(index, optionIndex) =>
-            console.log(rows[index].name + " got " + options[optionIndex])
+            console.log(
+              rows[index].rollout_name + " got " + options[optionIndex]
+            )
           }
         />
         <div
