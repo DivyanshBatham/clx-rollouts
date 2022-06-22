@@ -167,28 +167,28 @@ export default function RolloutTable(props) {
                   {row.rollout_name}
                 </TableCell>
                 <TableCell
-                  onClick={() => onRolloutClick(index)}
+                  onClick={() => onRolloutClick(row.id)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
                   {type_list[row.rollout_type - 1]}
                 </TableCell>
                 <TableCell
-                  onClick={() => onRolloutClick(index)}
+                  onClick={() => onRolloutClick(row.id)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
                   {level_list[row.rollout_level - 1]}
                 </TableCell>
                 <TableCell
-                  onClick={() => onRolloutClick(index)}
+                  onClick={() => onRolloutClick(row.id)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
                   {status_list[row.rollout_status]}
                 </TableCell>
                 <TableCell
-                  onClick={() => onRolloutClick(index)}
+                  onClick={() => onRolloutClick(row.id)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
