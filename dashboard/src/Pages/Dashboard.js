@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
-  AppBar,
-  Toolbar,
   Box,
+  Container,
   CssBaseline,
+  Stack,
   Drawer,
   Typography,
+  Button,
 } from "@mui/material";
 import AddButton from "../Components/AddButton";
 import Search from "../Components/Search";
@@ -17,6 +18,8 @@ import { ReactComponent as UnacademyLogo } from "../Assets/Unacademy-logo.svg";
 import Pagination from "@mui/material/Pagination";
 import usePagination from "../Utils/Pagination";
 import axios from "axios";
+import Navbar from "../Components/Navbar";
+import Filters from "../Components/Filters";
 
 export default function Dashboard() {
   const [createRolloutOpen, setCreateRolloutOpen] = useState(false);
@@ -97,77 +100,48 @@ export default function Dashboard() {
     toggleViewRolloutSlider();
   };
   const options = [
-    "Live",
-    "Cancelled",
-    "Paused",
-    "Failed",
-    "Created",
-    "Success",
+    "Create",
+    "Go Live",
+    "Mark it as Success",
+    "Cancel",
+    "Pause",
+    "Mark it as Failure",
   ];
-  const [currentOption, setCurrentOption] = useState(options[0]);
   const rows = [
     {
-      name: "abc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Live",
+      id: 1,
+      description: "Fifth",
+      rollout_type: 1,
+      rollout_name: "RAH",
+      rollout_status: 1,
+      rollout_level: 2,
+      created_at: "2022-06-21T06:34:23.580759Z",
+      updated_at: null,
+      start_time: null,
+      end_time: null,
+      is_active: true,
+      created_by: "venu",
     },
     {
-      name: "adsbc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Live",
-    },
-    {
-      name: "abdsac",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Cancelled",
-    },
-    {
-      name: "abdsadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "sadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "abdshwbehwbadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "awbadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
-    },
-    {
-      name: "abehwbadc",
-      createdBy: "Venu",
-      createdAt: "13-07-2002",
-      updatedAt: "13-07-2002",
-      status: "Success",
+      id: 2,
+      description: "Fifth",
+      rollout_type: 2,
+      rollout_name: "AddBookmark",
+      rollout_status: 4,
+      rollout_level: 2,
+      created_at: "2022-06-21T08:49:20.462872Z",
+      updated_at: null,
+      start_time: null,
+      end_time: null,
+      is_active: true,
+      created_by: "venu",
     },
   ];
   const filters = [
     {
       filterType: "status",
       filterOptions: [
-        "All",
+        "All Status",
         "Live",
         "Cancelled",
         "Paused",
@@ -175,10 +149,13 @@ export default function Dashboard() {
         "Created",
       ],
     },
-    { filterType: "type", filterOptions: ["All", "Feature", "Deployment"] },
+    {
+      filterType: "type",
+      filterOptions: ["All Types", "Feature", "Deployment"],
+    },
     {
       filterType: "level",
-      filterOptions: ["All", "Goal", "Class", "Educator", "Course"],
+      filterOptions: ["All Levels", "Goal", "Class", "Educator", "Course"],
     },
   ];
   const [selectedFilters, setSelectedFilters] = useState({
@@ -186,6 +163,7 @@ export default function Dashboard() {
     type: 0,
     level: 0,
   });
+
   const onFilterApply = () => {
     console.log(selectedFilters);
   };
@@ -202,131 +180,265 @@ export default function Dashboard() {
   return (
     <>
       <CssBaseline />
-      <Box component="nav">
-        <AppBar position="static" style={{ backgroundColor: "#ACCBF7" }}>
-          <Toolbar>
-            <UnacademyLogo
-              width={182}
-              height={64}
-              style={{ marginLeft: "1vw" }}
-            />
-            <Typography
-              variant="h4"
-              style={{
-                marginLeft: "1vw",
-                color: "#2d81f7",
-                fontWeight: "Bold",
-              }}
-            >
-              Rollouts
-            </Typography>
-            <Search
-              style={{ marginLeft: "15vw", width: "30vw" }}
-              searchText={searchText}
-              setSearchText={setSearchText}
-              onSearch={() => console.log(searchText + " is searched.")}
-            />
-            <FilterDropDown
-              style={{ marginLeft: "15vw" }}
-              filters={filters}
-              selectedFilters={selectedFilters}
-              setSelectedFilters={setSelectedFilters}
-              onApply={onFilterApply}
-            />
-            <AddButton
-              style={{ marginLeft: "2vw" }}
-              toolTipTitle="Add a new Rollout"
-              handleClick={handleCreateRollout}
-            />
+//       <Box component="nav">
+//         <AppBar position="static" style={{ backgroundColor: "#ACCBF7" }}>
+//           <Toolbar>
+//             <UnacademyLogo
+//               width={182}
+//               height={64}
+//               style={{ marginLeft: "1vw" }}
+//             />
+//             <Typography
+//               variant="h4"
+//               style={{
+//                 marginLeft: "1vw",
+//                 color: "#2d81f7",
+//                 fontWeight: "Bold",
+//               }}
+//             >
+//               Rollouts
+//             </Typography>
+//             <Search
+//               style={{ marginLeft: "15vw", width: "30vw" }}
+//               searchText={searchText}
+//               setSearchText={setSearchText}
+//               onSearch={() => console.log(searchText + " is searched.")}
+//             />
+//             <FilterDropDown
+//               style={{ marginLeft: "15vw" }}
+//               filters={filters}
+//               selectedFilters={selectedFilters}
+//               setSelectedFilters={setSelectedFilters}
+//               onApply={onFilterApply}
+//             />
+//             <AddButton
+//               style={{ marginLeft: "2vw" }}
+//               toolTipTitle="Add a new Rollout"
+//               handleClick={handleCreateRollout}
+//             />
 
-            <Drawer
-              open={viewRolloutOpen || createRolloutOpen || editRolloutOpen}
-              anchor="right"
-              onClose={() => {
-                if (viewRolloutOpen) {
-                  setViewRolloutOpen(false);
-                } else if (createRolloutOpen) {
-                  setCreateRolloutOpen(false);
-                } else {
-                  setEditRolloutOpen(false);
-                }
-              }}
-            >
-              <Rollout
-                editRolloutOpen={editRolloutOpen}
-                viewRolloutOpen={viewRolloutOpen}
-                createRolloutOpen={createRolloutOpen}
-                setEditRolloutOpen={setEditRolloutOpen}
-                setViewRolloutOpen={setViewRolloutOpen}
-                setCreateRolloutOpen={setCreateRolloutOpen}
-                setViewConfigOpen={setViewConfigOpen}
-                isConfigured={isConfigured}
-                setCreateConfigOpen={setCreateConfigOpen}
-                rolloutInfo={rolloutInfo}
-                setRolloutInfo={setRolloutInfo}
-                rolloutConfigInfo={rolloutConfigInfo}
-                setRolloutConfigInfo={setRolloutConfigInfo}
-              />
-            </Drawer>
-            <Drawer
-              open={editConfigOpen || createConfigOpen || viewConfigOpen}
-              anchor="right"
-              onClose={() => {
-                if (viewConfigOpen) {
-                  setViewConfigOpen(false);
-                } else if (createConfigOpen) {
-                  setCreateConfigOpen(false);
-                } else {
-                  setEditConfigOpen(false);
-                }
-              }}
-            >
-              <Config
-                rolloutConfigInfo={rolloutConfigInfo}
-                setRolloutConfigInfo={setRolloutConfigInfo}
-                createConfigOpen={createConfigOpen}
-                viewConfigOpen={viewConfigOpen}
-                editConfigOpen={editConfigOpen}
-                setEditConfigOpen={setEditConfigOpen}
-                setViewConfigOpen={setViewConfigOpen}
-                setCreateConfigOpen={setCreateConfigOpen}
-              />
-            </Drawer>
-          </Toolbar>
-        </AppBar>
-      </Box>
-      <RolloutTable
-        style={{
-          marginTop: "2vh",
-          marginLeft: "1vw",
-          marginRight: "1vw",
-          border: "3px #ACCBF7 solid",
-          borderRadius: "10px",
-        }}
-        options={options}
-        rows={_DATA.currentData()}
-        onRolloutClick={(index) => handleRolloutClick(index)}
-        rolloutOnChange={(index, optionIndex) =>
-          console.log(rows[index].name + " got " + options[optionIndex])
-        }
-      />
-      <div
-        style={{
-          marginTop: "1vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Pagination
-          count={count}
-          size="large"
-          page={page}
-          variant="outlined"
-          shape="rounded"
-          onChange={handleChange}
+//             <Drawer
+//               open={viewRolloutOpen || createRolloutOpen || editRolloutOpen}
+//               anchor="right"
+//               onClose={() => {
+//                 if (viewRolloutOpen) {
+//                   setViewRolloutOpen(false);
+//                 } else if (createRolloutOpen) {
+//                   setCreateRolloutOpen(false);
+//                 } else {
+//                   setEditRolloutOpen(false);
+//                 }
+//               }}
+//             >
+//               <Rollout
+//                 editRolloutOpen={editRolloutOpen}
+//                 viewRolloutOpen={viewRolloutOpen}
+//                 createRolloutOpen={createRolloutOpen}
+//                 setEditRolloutOpen={setEditRolloutOpen}
+//                 setViewRolloutOpen={setViewRolloutOpen}
+//                 setCreateRolloutOpen={setCreateRolloutOpen}
+//                 setViewConfigOpen={setViewConfigOpen}
+//                 isConfigured={isConfigured}
+//                 setCreateConfigOpen={setCreateConfigOpen}
+//                 rolloutInfo={rolloutInfo}
+//                 setRolloutInfo={setRolloutInfo}
+//                 rolloutConfigInfo={rolloutConfigInfo}
+//                 setRolloutConfigInfo={setRolloutConfigInfo}
+//               />
+//             </Drawer>
+//             <Drawer
+//               open={editConfigOpen || createConfigOpen || viewConfigOpen}
+//               anchor="right"
+//               onClose={() => {
+//                 if (viewConfigOpen) {
+//                   setViewConfigOpen(false);
+//                 } else if (createConfigOpen) {
+//                   setCreateConfigOpen(false);
+//                 } else {
+//                   setEditConfigOpen(false);
+//                 }
+//               }}
+//             >
+//               <Config
+//                 rolloutConfigInfo={rolloutConfigInfo}
+//                 setRolloutConfigInfo={setRolloutConfigInfo}
+//                 createConfigOpen={createConfigOpen}
+//                 viewConfigOpen={viewConfigOpen}
+//                 editConfigOpen={editConfigOpen}
+//                 setEditConfigOpen={setEditConfigOpen}
+//                 setViewConfigOpen={setViewConfigOpen}
+//                 setCreateConfigOpen={setCreateConfigOpen}
+//               />
+//             </Drawer>
+//           </Toolbar>
+//         </AppBar>
+//       </Box>
+//       <RolloutTable
+//         style={{
+//           marginTop: "2vh",
+//           marginLeft: "1vw",
+//           marginRight: "1vw",
+//           border: "3px #ACCBF7 solid",
+//           borderRadius: "10px",
+//         }}
+//         options={options}
+//         rows={_DATA.currentData()}
+//         onRolloutClick={(index) => handleRolloutClick(index)}
+//         rolloutOnChange={(index, optionIndex) =>
+//           console.log(rows[index].name + " got " + options[optionIndex])
+//         }
+//       />
+//       <div
+//         style={{
+//           marginTop: "1vh",
+//           display: "flex",
+//           alignItems: "center",
+//           justifyContent: "center",
+//         }}
+//       >
+//         <Pagination
+//           count={count}
+//           size="large"
+//           page={page}
+//           variant="outlined"
+//           shape="rounded"
+//           onChange={handleChange}
+//         />
+//       </div>
+      <Navbar />
+      <Container maxWidth="lg">
+        <Stack
+          style={{
+            marginTop: "2vh",
+          }}
+          direction="row"
+          spacing={113}
+        >
+          <Typography variant="h4" fontWeight="600">
+            Rollouts
+          </Typography>
+          <AddButton
+            toolTipTitle="Add a new Rollout"
+            handleClick={toggleCreateRolloutSlider}
+          />
+        </Stack>
+        <Stack
+          style={{
+            marginTop: "2vh",
+          }}
+          direction="row"
+          spacing={20}
+        >
+          <Search
+            style={{ width: "20vw" }}
+            searchText={searchText}
+            setSearchText={setSearchText}
+            onSearch={() => console.log(searchText + " is searched.")}
+          />
+          <Filters
+            filters={filters}
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+            onApply={onFilterApply}
+          />
+          <Button  variant="outlined" onClick={onFilterApply}>
+            APPLY
+          </Button>
+          {/* <FilterDropDown
+            style={{ marginTop: "1vh" }}
+            filters={filters}
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+            onApply={onFilterApply}
+          /> */}
+        </Stack>
+        <Drawer
+          open={createRolloutOpen}
+          anchor="right"
+          onClose={toggleCreateRolloutSlider}
+        >
+          <CreateRollout />
+        </Drawer>
+
+        <Drawer
+          open={viewRolloutOpen}
+          anchor="right"
+          onClose={toggleViewRolloutSlider}
+        >
+          <ViewRollout
+            setEditRolloutOpen={setEditRolloutOpen}
+            setViewRolloutOpen={setViewRolloutOpen}
+            setViewConfigOpen={setViewConfigOpen}
+            isConfigured={isConfigured}
+            setCreateConfigOpen={setCreateConfigOpen}
+          />
+        </Drawer>
+
+        <Drawer
+          open={editRolloutOpen}
+          anchor="right"
+          onClose={() => setEditRolloutOpen(false)}
+        >
+          <EditRollout setEditRolloutOpen={setEditRolloutOpen} />
+        </Drawer>
+
+        <Drawer
+          open={viewConfigOpen}
+          anchor="right"
+          onClose={() => setViewConfigOpen(false)}
+        >
+          <ViewConfig
+            setEditConfigOpen={setEditConfigOpen}
+            setViewConfigOpen={setViewConfigOpen}
+          />
+        </Drawer>
+
+        <Drawer
+          open={createConfigOpen}
+          anchor="right"
+          onClose={() => setCreateConfigOpen(false)}
+        >
+          <CreateConfig />
+        </Drawer>
+        <Drawer
+          open={editConfigOpen}
+          anchor="right"
+          onClose={() => setEditConfigOpen(false)}
+        >
+          <EditConfig />
+        </Drawer>
+        <RolloutTable
+          style={{
+            marginTop: "2vh",
+            borderRadius: "10px",
+          }}
+          options={options}
+          rows={_DATA.currentData()}
+          onRolloutClick={(index) => handleRolloutClick(index)}
+          rolloutOnChange={(index, optionIndex) =>
+            console.log(
+              rows[index].rollout_name + " got " + options[optionIndex]
+            )
+          }
         />
-      </div>
+        <div
+          style={{
+            marginTop: "1vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination
+            count={count}
+            size="large"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
+        </div>
+      </Container>
     </>
   );
 }
