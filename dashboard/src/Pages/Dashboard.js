@@ -145,10 +145,31 @@ export default function Dashboard() {
   };
 
   const onFilterApply = () => {
-    console.log(selectedFilters);
+    let URL = "http://127.0.0.1:8000/rollout/filter/?limit=100&offset=0";
+    if (selectedFilters.status !== 0)
+      URL += "&status=" + selectedFilters.status;
+    if (selectedFilters.type !== 0) URL += "&type=" + selectedFilters.type;
+    if (selectedFilters.level !== 0) URL += "&level=" + selectedFilters.level;
+    console.log(URL);
+    axios.get(URL).then((res) => {
+      console.log(res.data);
+      setTableData(res.data);
+    });
   };
 
-  const handleSearch = () => {};
+  const handleSearch = () => {
+    let URL = "http://127.0.0.1:8000/rollout/filter/?limit=100&offset=0";
+    if (selectedFilters.status !== 0)
+      URL += "&status=" + selectedFilters.status;
+    if (selectedFilters.type !== 0) URL += "&type=" + selectedFilters.type;
+    if (selectedFilters.level !== 0) URL += "&level=" + selectedFilters.level;
+    URL += "&search_id=" + searchText;
+    console.log(URL);
+    axios.get(URL).then((res) => {
+      console.log(res.data);
+      setTableData(res.data);
+    });
+  };
   const PER_PAGE = 5;
   const count = Math.ceil(tableData.length / PER_PAGE);
   const _DATA = usePagination(tableData, PER_PAGE);
@@ -308,7 +329,7 @@ export default function Dashboard() {
             marginTop: "2vh",
           }}
           direction="row"
-          spacing={20}
+          spacing={3}
         >
           <Search
             style={{ width: "20vw" }}
@@ -324,9 +345,6 @@ export default function Dashboard() {
             setSelectedFilters={setSelectedFilters}
             onApply={onFilterApply}
           />
-          <Button variant="outlined" onClick={onFilterApply}>
-            APPLY
-          </Button>
           {/* <FilterDropDown
             style={{ marginTop: "1vh" }}
             filters={filters}

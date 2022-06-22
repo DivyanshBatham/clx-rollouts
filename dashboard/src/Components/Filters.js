@@ -8,7 +8,7 @@ import {
   Button,
 } from "@mui/material";
 function BasicSelect(props) {
-  const { dropdownProperty, defaultValue, dropdownItems, setIndex } = props;
+  const { dropdownProperty, defaultValue, dropdownItems, setIndex,onChange } = props;
   return (
     <Box style={{ width: "8vw" }}>
       <FormControl fullWidth required>
@@ -16,6 +16,7 @@ function BasicSelect(props) {
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select"
           defaultValue={dropdownItems[defaultValue]}
+          onChange={onChange}
         >
           <MenuItem value=""></MenuItem>
           {dropdownItems.map((item, index) => {
@@ -48,6 +49,7 @@ export default function Filter(props) {
             dropdownProperty={filterType}
             dropdownItems={filters[index].filterOptions}
             defaultValue={selectedFilters[filterType]}
+            onChange={onApply}
             setIndex={(index) =>
               setSelectedFilters({ ...selectedFilters, [filterType]: index })
             }
