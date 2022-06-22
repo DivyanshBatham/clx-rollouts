@@ -180,7 +180,7 @@ export default function Dashboard() {
   return (
     <>
       <CssBaseline />
-//       <Box component="nav">
+      {/* //       <Box component="nav">
 //         <AppBar position="static" style={{ backgroundColor: "#ACCBF7" }}>
 //           <Toolbar>
 //             <UnacademyLogo
@@ -304,7 +304,7 @@ export default function Dashboard() {
 //           shape="rounded"
 //           onChange={handleChange}
 //         />
-//       </div>
+//       </div> */}
       <Navbar />
       <Container maxWidth="lg">
         <Stack
@@ -319,7 +319,7 @@ export default function Dashboard() {
           </Typography>
           <AddButton
             toolTipTitle="Add a new Rollout"
-            handleClick={toggleCreateRolloutSlider}
+            handleClick={handleCreateRollout}
           />
         </Stack>
         <Stack
@@ -341,7 +341,7 @@ export default function Dashboard() {
             setSelectedFilters={setSelectedFilters}
             onApply={onFilterApply}
           />
-          <Button  variant="outlined" onClick={onFilterApply}>
+          <Button variant="outlined" onClick={onFilterApply}>
             APPLY
           </Button>
           {/* <FilterDropDown
@@ -353,59 +353,57 @@ export default function Dashboard() {
           /> */}
         </Stack>
         <Drawer
-          open={createRolloutOpen}
+          open={viewRolloutOpen || createRolloutOpen || editRolloutOpen}
           anchor="right"
-          onClose={toggleCreateRolloutSlider}
+          onClose={() => {
+            if (viewRolloutOpen) {
+              setViewRolloutOpen(false);
+            } else if (createRolloutOpen) {
+              setCreateRolloutOpen(false);
+            } else {
+              setEditRolloutOpen(false);
+            }
+          }}
         >
-          <CreateRollout />
-        </Drawer>
-
-        <Drawer
-          open={viewRolloutOpen}
-          anchor="right"
-          onClose={toggleViewRolloutSlider}
-        >
-          <ViewRollout
+          <Rollout
+            editRolloutOpen={editRolloutOpen}
+            viewRolloutOpen={viewRolloutOpen}
+            createRolloutOpen={createRolloutOpen}
             setEditRolloutOpen={setEditRolloutOpen}
             setViewRolloutOpen={setViewRolloutOpen}
+            setCreateRolloutOpen={setCreateRolloutOpen}
             setViewConfigOpen={setViewConfigOpen}
             isConfigured={isConfigured}
             setCreateConfigOpen={setCreateConfigOpen}
+            rolloutInfo={rolloutInfo}
+            setRolloutInfo={setRolloutInfo}
+            rolloutConfigInfo={rolloutConfigInfo}
+            setRolloutConfigInfo={setRolloutConfigInfo}
           />
         </Drawer>
-
         <Drawer
-          open={editRolloutOpen}
+          open={editConfigOpen || createConfigOpen || viewConfigOpen}
           anchor="right"
-          onClose={() => setEditRolloutOpen(false)}
+          onClose={() => {
+            if (viewConfigOpen) {
+              setViewConfigOpen(false);
+            } else if (createConfigOpen) {
+              setCreateConfigOpen(false);
+            } else {
+              setEditConfigOpen(false);
+            }
+          }}
         >
-          <EditRollout setEditRolloutOpen={setEditRolloutOpen} />
-        </Drawer>
-
-        <Drawer
-          open={viewConfigOpen}
-          anchor="right"
-          onClose={() => setViewConfigOpen(false)}
-        >
-          <ViewConfig
+          <Config
+            rolloutConfigInfo={rolloutConfigInfo}
+            setRolloutConfigInfo={setRolloutConfigInfo}
+            createConfigOpen={createConfigOpen}
+            viewConfigOpen={viewConfigOpen}
+            editConfigOpen={editConfigOpen}
             setEditConfigOpen={setEditConfigOpen}
             setViewConfigOpen={setViewConfigOpen}
+            setCreateConfigOpen={setCreateConfigOpen}
           />
-        </Drawer>
-
-        <Drawer
-          open={createConfigOpen}
-          anchor="right"
-          onClose={() => setCreateConfigOpen(false)}
-        >
-          <CreateConfig />
-        </Drawer>
-        <Drawer
-          open={editConfigOpen}
-          anchor="right"
-          onClose={() => setEditConfigOpen(false)}
-        >
-          <EditConfig />
         </Drawer>
         <RolloutTable
           style={{
