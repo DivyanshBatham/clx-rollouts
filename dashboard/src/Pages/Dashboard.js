@@ -45,11 +45,45 @@ export default function Dashboard() {
     rolloutEndRange: 10,
   });
   const [rolloutId, setRolloutId] = useState("");
-
+  const [selectedFilters, setSelectedFilters] = useState({
+    status: 1,
+    type: 0,
+    level: 0,
+  });
 
   const TYPE_MAPPING = ["Feature", "Deployment"];
 
   const LEVEL_MAPPING = ["Goal", "Class", "Educator", "Course"];
+
+  const options = [
+    "Create",
+    "Go Live",
+    "Mark it as Success",
+    "Cancel",
+    "Pause",
+    "Mark it as Failure",
+  ];
+  const filters = [
+    {
+      filterType: "status",
+      filterOptions: [
+        "All Status",
+        "Live",
+        "Cancelled",
+        "Paused",
+        "Failure",
+        "Created",
+      ],
+    },
+    {
+      filterType: "type",
+      filterOptions: ["All Types", "Feature", "Deployment"],
+    },
+    {
+      filterType: "level",
+      filterOptions: ["All Levels", "Goal", "Class", "Educator", "Course"],
+    },
+  ];
 
   useEffect(() => {
     axios
@@ -74,7 +108,7 @@ export default function Dashboard() {
     setViewRolloutOpen(!viewRolloutOpen);
   };
 
-  const handleRolloutClick = (index) => {
+  const handleRolloutClick = (ID) => {
     // TO DO - check if the configuration for this experiment exists
     // send prop to viewconfig to show the button accordingly
     setRolloutInfo({
@@ -85,7 +119,7 @@ export default function Dashboard() {
       rolloutLevel: "Class",
     });
 
-    axios.get(`http://127.0.0.1:8000/rollout/${index}`).then((res) => {
+    axios.get(`http://127.0.0.1:8000/rollout/${ID}`).then((res) => {
       console.log(res.data);
       setRolloutInfo({
         ...rolloutInfo,
@@ -96,7 +130,7 @@ export default function Dashboard() {
       });
     });
     axios
-      .get(`http://127.0.0.1:8000/rollout/${index}/configuration`)
+      .get(`http://127.0.0.1:8000/rollout/${ID}/configuration`)
       .then((res) => {
         console.log(res.data);
         if (res.data.length !== 0) {
@@ -107,82 +141,14 @@ export default function Dashboard() {
         console.log(err);
         setIsConfigured(false);
       });
-    // if (1 === 2) {
-    //   setIsConfigured(true);
-    // }
-    // (index) => console.log(rows[index].name + " got clicked");
-    (index) => console.log(rows[index].name + " got clicked");
     toggleViewRolloutSlider();
-  };;
-  const options = [
-    "Create",
-    "Go Live",
-    "Mark it as Success",
-    "Cancel",
-    "Pause",
-    "Mark it as Failure",
-  ];
-  const rows = [
-    {
-      id: 1,
-      description: "Fifth",
-      rollout_type: 1,
-      rollout_name: "RAH",
-      rollout_status: 1,
-      rollout_level: 2,
-      created_at: "2022-06-21T06:34:23.580759Z",
-      updated_at: null,
-      start_time: null,
-      end_time: null,
-      is_active: true,
-      created_by: "venu",
-    },
-    {
-      id: 2,
-      description: "Fifth",
-      rollout_type: 2,
-      rollout_name: "AddBookmark",
-      rollout_status: 4,
-      rollout_level: 2,
-      created_at: "2022-06-21T08:49:20.462872Z",
-      updated_at: null,
-      start_time: null,
-      end_time: null,
-      is_active: true,
-      created_by: "venu",
-    },
-  ];
-  const filters = [
-    {
-      filterType: "status",
-      filterOptions: [
-        "All Status",
-        "Live",
-        "Cancelled",
-        "Paused",
-        "Failure",
-        "Created",
-      ],
-    },
-    {
-      filterType: "type",
-      filterOptions: ["All Types", "Feature", "Deployment"],
-    },
-    {
-      filterType: "level",
-      filterOptions: ["All Levels", "Goal", "Class", "Educator", "Course"],
-    },
-  ];
-  const [selectedFilters, setSelectedFilters] = useState({
-    status: 0,
-    type: 0,
-    level: 0,
-  });
+  };
 
   const onFilterApply = () => {
     console.log(selectedFilters);
   };
 
+  const handleSearch = () => {};
   const PER_PAGE = 5;
   const count = Math.ceil(tableData.length / PER_PAGE);
   const _DATA = usePagination(tableData, PER_PAGE);
@@ -348,7 +314,9 @@ export default function Dashboard() {
             style={{ width: "20vw" }}
             searchText={searchText}
             setSearchText={setSearchText}
-            onSearch={() => console.log(searchText + " is searched.")}
+            onSearch={() => {
+              handleSearch;
+            }}
           />
           <Filters
             filters={filters}

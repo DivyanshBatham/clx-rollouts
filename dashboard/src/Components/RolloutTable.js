@@ -160,7 +160,7 @@ export default function RolloutTable(props) {
             {rows.map((row, index) => (
               <TableRow key={row.id} hover>
                 <TableCell
-                  onClick={() => onRolloutClick(index)}
+                  onClick={() => onRolloutClick(row.id)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
@@ -195,7 +195,7 @@ export default function RolloutTable(props) {
                   {row.created_by}
                 </TableCell>
                 <TableCell
-                  onClick={() => onRolloutClick(index)}
+                  onClick={() => onRolloutClick(row.id)}
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
