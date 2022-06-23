@@ -207,9 +207,7 @@ export default function Dashboard() {
   };
   const onRolloutChange = (rolloutId, optionIndex) => {
     axios
-      .put(`http://127.0.0.1:8000/rollout/${rolloutId}`, {
-        rollout_status: optionIndex,
-      })
+      .put(`http://127.0.0.1:8000/rollout/${rolloutId}/status/${optionIndex}`)
       .then((res) => {
         console.log(res);
         console.log(res.data.message);
