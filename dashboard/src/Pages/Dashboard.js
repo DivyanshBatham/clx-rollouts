@@ -87,12 +87,13 @@ export default function Dashboard() {
     {
       filterType: "status",
       filterOptions: [
-        "All Status",
+        "Created",
         "Live",
+        "Success",
         "Cancelled",
         "Paused",
         "Failure",
-        "Created",
+        "All Statuses",
       ],
     },
     {
@@ -110,7 +111,7 @@ export default function Dashboard() {
     let params = {};
     params.limit = 100;
     params.offset = 0;
-    if (selectedFilters.status !== 0) params.status = selectedFilters.status;
+    if (selectedFilters.status !== 6) params.status = selectedFilters.status;
     if (selectedFilters.type !== 0) params.type = selectedFilters.type;
     if (selectedFilters.level !== 0) params.level = selectedFilters.level;
     if (sortProperties.property.length > 0) {
