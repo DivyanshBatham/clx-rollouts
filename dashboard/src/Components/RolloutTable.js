@@ -6,6 +6,8 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
+import TableFooter from "@mui/material/TableFooter";
+import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
 import ThreeDotDropDown from "./ThreeDotDropDown";
 import TableSortLabel from "@mui/material/TableSortLabel";
@@ -20,6 +22,8 @@ export default function RolloutTable(props) {
     rolloutOnChange,
     sortProperties,
     setSortProperties,
+    pageOffset,
+    setPageOffset,
   } = props;
   const status_list = [
     "Created",
@@ -41,6 +45,7 @@ export default function RolloutTable(props) {
   };
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Name");
+  const [page, setPage] = useState(1);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -51,6 +56,13 @@ export default function RolloutTable(props) {
       order: order,
     });
     console.log("Request to sort table with " + property + " in " + isAsc);
+  };
+  const handleChangePage = (e, p) => {
+    console.log(p);
+    setPage(p);
+    let offset = (p - 1) * pageOffset.limit;
+    setPageOffset({ ...pageOffset, offset: offset });
+    console.log(pageOffset);
   };
   return (
     <div style={style}>
@@ -228,6 +240,36 @@ export default function RolloutTable(props) {
               </TableRow>
             ))}
           </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                count={-1}
+                rowsPerPage={-1}
+                page={page}
+                onPageChange={handleChangePage}
+                // onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[]}
+                labelRowsPerPage={<span></span>}
+                labelDisplayedRows={({ page }) => {
+                  return `Page: ${page}`;
+                }}
+                backIconButtonProps={{
+                  color: "primary",
+                }}
+                nextIconButtonProps={{ color: "primary" }}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "page number",
+                  },
+                }}
+                showFirstButton={true}
+                showLastButton={true}
+                //ActionsComponent={TablePaginationActions}
+                //component={Box}
+                //sx and classes prop discussed in styling section
+              />
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
     </div>

@@ -64,6 +64,10 @@ export default function Dashboard() {
     property: "",
     order: "",
   });
+  const [pageOffset, setPageOffset] = useState({
+    limit: 5,
+    offset: 0,
+  });
   const STATUS_MAPPING = [
     "Created",
     "Live",
@@ -109,8 +113,8 @@ export default function Dashboard() {
   const fetchData = () => {
     let URL = "http://127.0.0.1:8000/rollout/filter/";
     let params = {};
-    params.limit = 100;
-    params.offset = 0;
+    params.limit = pageOffset.limit;
+    params.offset = pageOffset.offset;
     if (selectedFilters.status !== 6) params.status = selectedFilters.status;
     if (selectedFilters.type !== 0) params.type = selectedFilters.type;
     if (selectedFilters.level !== 0) params.level = selectedFilters.level;
@@ -128,7 +132,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchData();
-  }, [selectedFilters, sortProperties]);
+  }, [selectedFilters, sortProperties, pageOffset]);
 
   const handleCreateRollout = () => {
     setRolloutInfo({
@@ -184,14 +188,14 @@ export default function Dashboard() {
     console.log(searchText + " is searched");
     fetchData();
   };
-  const PER_PAGE = 5;
-  const count = Math.ceil(tableData.length / PER_PAGE);
-  const _DATA = usePagination(tableData, PER_PAGE);
+  // const PER_PAGE = 5;
+  // const count = Math.ceil(tableData.length / PER_PAGE);
+  // const _DATA = usePagination(tableData, PER_PAGE);
 
-  const handleChange = (e, p) => {
-    setPage(p);
-    _DATA.jump(p);
-  };
+  // const handleChange = (e, p) => {
+  //   setPage(p);
+  //   _DATA.jump(p);
+  // };
 
   const confirmRolloutChange = (rolloutId, rolloutName, optionIndex) => {
     setActionPopupOpen(true);
@@ -327,7 +331,7 @@ export default function Dashboard() {
             borderRadius: "10px",
           }}
           options={options}
-          rows={_DATA.currentData()}
+          rows={tableData}
           onRolloutClick={(ID) => {
             handleRolloutClick(ID);
             setRolloutId(ID);
@@ -340,6 +344,8 @@ export default function Dashboard() {
           }}
           sortProperties={sortProperties}
           setSortProperties={setSortProperties}
+          pageOffset={pageOffset}
+          setPageOffset={setPageOffset}
         />
         <ActionPopup
           open={actionPopupOpen}
@@ -360,14 +366,14 @@ export default function Dashboard() {
             justifyContent: "center",
           }}
         >
-          <Pagination
+          {/* <Pagination
             count={count}
             size="large"
             page={page}
             variant="outlined"
             shape="rounded"
             onChange={handleChange}
-          />
+          /> */}
         </div>
       </Container>
     </>
