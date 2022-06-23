@@ -20,6 +20,7 @@ import usePagination from "../Utils/Pagination";
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import Filters from "../Components/Filters";
+import ActionPopup from "../Components/ActionPopup";
 
 export default function Dashboard() {
   const [createRolloutOpen, setCreateRolloutOpen] = useState(false);
@@ -32,6 +33,7 @@ export default function Dashboard() {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("");
   const [tableData, setTableData] = useState([]);
+  const [actionPopupOpen, setActionPopupOpen] = useState(false);
   const [rolloutInfo, setRolloutInfo] = React.useState({
     rolloutName: "Hand raise feature",
     description: "During live class it is useful to ask doubts",
@@ -50,9 +52,22 @@ export default function Dashboard() {
     type: 0,
     level: 0,
   });
-
+  const [actionPopupRolloutDetails, setActionPopupRolloutDetails] =
+    React.useState({
+      rolloutId: 0,
+      rolloutName: "",
+      toStatus: "",
+      optionIndex: 0,
+    });
+  const STATUS_MAPPING = [
+    "Created",
+    "Live",
+    "Success",
+    "Cancelled",
+    "Paused",
+    "Failure",
+  ];
   const TYPE_MAPPING = ["Feature", "Deployment"];
-
   const LEVEL_MAPPING = ["Goal", "Class", "Educator", "Course"];
 
   const options = [
@@ -179,6 +194,26 @@ export default function Dashboard() {
     _DATA.jump(p);
   };
 
+  const confirmRolloutChange = (rolloutId, rolloutName, optionIndex) => {
+    setActionPopupOpen(true);
+    setActionPopupRolloutDetails({
+      ...actionPopupRolloutDetails,
+      rolloutId: rolloutId,
+      rolloutName: rolloutName,
+      toStatus: STATUS_MAPPING[optionIndex],
+      optionIndex: optionIndex,
+    });
+  };
+  const onRolloutChange = (rolloutId, optionIndex) => {
+    axios
+      .put(`http://127.0.0.1:8000/rollout/${rolloutId}`, {
+        rollout_status: optionIndex,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.message);
+      });
+  };
   return (
     <>
       <CssBaseline />
@@ -419,11 +454,23 @@ export default function Dashboard() {
             handleRolloutClick(ID);
             setRolloutId(ID);
           }}
-          rolloutOnChange={(index, optionIndex) =>
+          rolloutOnChange={(rolloutId, rolloutName, optionIndex) => {
             console.log(
-              rows[index].rollout_name + " got " + options[optionIndex]
-            )
-          }
+              "rollout with ID: " + rolloutId + " got " + options[optionIndex]
+            );
+            confirmRolloutChange(rolloutId, rolloutName, optionIndex);
+          }}
+        />
+        <ActionPopup
+          open={actionPopupOpen}
+          setOpen={setActionPopupOpen}
+          rolloutId={actionPopupRolloutDetails.rolloutId}
+          rolloutName={actionPopupRolloutDetails.rolloutName}
+          toStatus={actionPopupRolloutDetails.toStatus}
+          optionIndex={actionPopupRolloutDetails.optionIndex}
+          onRolloutChange={onRolloutChange}
+          agreeText="Yes"
+          disagreeText="No"
         />
         <div
           style={{

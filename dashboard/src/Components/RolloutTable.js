@@ -208,7 +208,7 @@ export default function RolloutTable(props) {
                     currentStatusIndex={row.rollout_status}
                     intialOption={row.status}
                     onChange={(optionIndex) => {
-                      rolloutOnChange(index, optionIndex);
+                      rolloutOnChange(row.id,row.rollout_name, optionIndex);
                     }}
                   />
                 </TableCell>
