@@ -7,6 +7,7 @@ import {
   Drawer,
   Typography,
   Button,
+  Divider,
 } from "@mui/material";
 import AddButton from "../Components/AddButton";
 import Search from "../Components/Search";
@@ -59,6 +60,10 @@ export default function Dashboard() {
       toStatus: "",
       optionIndex: 0,
     });
+  const [sortProperties, setSortProperties] = useState({
+    property: "",
+    order: "",
+  });
   const STATUS_MAPPING = [
     "Created",
     "Live",
@@ -108,7 +113,12 @@ export default function Dashboard() {
     if (selectedFilters.status !== 0) params.status = selectedFilters.status;
     if (selectedFilters.type !== 0) params.type = selectedFilters.type;
     if (selectedFilters.level !== 0) params.level = selectedFilters.level;
-    if (searchText.length > 0) params.search_id = searchText;
+    if (sortProperties.property.length > 0) {
+      if (sortProperties.order !== "asc") params.order = "-";
+      else params.order = "";
+      params.order += sortProperties.property;
+    }
+    if (searchText.length > 0) params.search = searchText;
     axios.get(URL, { params }).then((res) => {
       console.log(res.data);
       setTableData(res.data);
@@ -117,7 +127,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchData();
-  }, [selectedFilters]);
+  }, [selectedFilters, sortProperties]);
 
   const handleCreateRollout = () => {
     setRolloutInfo({
@@ -169,19 +179,6 @@ export default function Dashboard() {
     toggleViewRolloutSlider();
   };
 
-  const onFilterApply = () => {
-    // let URL = "http://127.0.0.1:8000/rollout/filter/?limit=100&offset=0";
-    // if (selectedFilters.status !== 0)
-    //   URL += "&status=" + selectedFilters.status;
-    // if (selectedFilters.type !== 0) URL += "&type=" + selectedFilters.type;
-    // if (selectedFilters.level !== 0) URL += "&level=" + selectedFilters.level;
-    // console.log(URL);
-    // axios.get(URL).then((res) => {
-    //   console.log(res.data);
-    //   setTableData(res.data);
-    // });
-  };
-
   const handleSearch = () => {
     console.log(searchText + " is searched");
     fetchData();
@@ -213,6 +210,14 @@ export default function Dashboard() {
         console.log(res.data.message);
       });
   };
+  const handleSort = (order, property) => {
+    setSortProperties({
+      ...sortProperties,
+      order: [order],
+      property: [property],
+    });
+    console.log(sortProperties);
+  };
   return (
     <>
       <CssBaseline />
@@ -223,7 +228,7 @@ export default function Dashboard() {
             marginTop: "2vh",
           }}
           direction="row"
-          spacing={113}
+          justifyContent="space-between"
         >
           <Typography variant="h4" fontWeight="600">
             Rollouts
@@ -233,6 +238,7 @@ export default function Dashboard() {
             handleClick={handleCreateRollout}
           />
         </Stack>
+        <Divider />
         <Stack
           style={{
             marginTop: "2vh",
@@ -331,6 +337,8 @@ export default function Dashboard() {
             );
             confirmRolloutChange(rolloutId, rolloutName, optionIndex);
           }}
+          sortProperties={sortProperties}
+          setSortProperties={setSortProperties}
         />
         <ActionPopup
           open={actionPopupOpen}

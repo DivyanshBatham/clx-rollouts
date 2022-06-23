@@ -12,7 +12,15 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
 
 export default function RolloutTable(props) {
-  const { style, rows, onRolloutClick, options, rolloutOnChange } = props;
+  const {
+    style,
+    rows,
+    onRolloutClick,
+    options,
+    rolloutOnChange,
+    sortProperties,
+    setSortProperties,
+  } = props;
   const status_list = [
     "Created",
     "Live",
@@ -37,6 +45,11 @@ export default function RolloutTable(props) {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
+    setSortProperties({
+      ...sortProperties,
+      property: property,
+      order: order,
+    });
     console.log("Request to sort table with " + property + " in " + isAsc);
   };
   return (
@@ -47,14 +60,14 @@ export default function RolloutTable(props) {
             <TableRow>
               <TableCell style={{ fontWeight: "bold" }} align="center">
                 <TableSortLabel
-                  active={orderBy === "NAME"}
-                  direction={orderBy === "NAME" ? order : "asc"}
+                  active={orderBy === "rollout_name"}
+                  direction={orderBy === "rollout_name" ? order : "asc"}
                   onClick={(event) => {
-                    handleRequestSort(event, "NAME");
+                    handleRequestSort(event, "rollout_name");
                   }}
                 >
                   NAME
-                  {orderBy === "NAME" ? (
+                  {orderBy === "rollout_name" ? (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc"
                         ? "sorted descending"
@@ -65,14 +78,14 @@ export default function RolloutTable(props) {
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }} align="center">
                 <TableSortLabel
-                  active={orderBy === "TYPE"}
-                  direction={orderBy === "TYPE" ? order : "asc"}
+                  active={orderBy === "rollout_type"}
+                  direction={orderBy === "rollout_type" ? order : "asc"}
                   onClick={(event) => {
-                    handleRequestSort(event, "TYPE");
+                    handleRequestSort(event, "rollout_type");
                   }}
                 >
                   TYPE
-                  {orderBy === "TYPE" ? (
+                  {orderBy === "rollout_type" ? (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc"
                         ? "sorted descending"
@@ -83,14 +96,14 @@ export default function RolloutTable(props) {
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }} align="center">
                 <TableSortLabel
-                  active={orderBy === "LEVEL"}
-                  direction={orderBy === "LEVEL" ? order : "asc"}
+                  active={orderBy === "rollout_level"}
+                  direction={orderBy === "rollout_level" ? order : "asc"}
                   onClick={(event) => {
-                    handleRequestSort(event, "LEVEL");
+                    handleRequestSort(event, "rollout_level");
                   }}
                 >
                   LEVEL
-                  {orderBy === "LEVEL" ? (
+                  {orderBy === "rollout_level" ? (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc"
                         ? "sorted descending"
@@ -101,14 +114,14 @@ export default function RolloutTable(props) {
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }} align="center">
                 <TableSortLabel
-                  active={orderBy === "STATUS"}
-                  direction={orderBy === "STATUS" ? order : "asc"}
+                  active={orderBy === "rollout_status"}
+                  direction={orderBy === "rollout_status" ? order : "asc"}
                   onClick={(event) => {
-                    handleRequestSort(event, "STATUS");
+                    handleRequestSort(event, "rollout_status");
                   }}
                 >
                   STATUS
-                  {orderBy === "STATUS" ? (
+                  {orderBy === "rollout_status" ? (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc"
                         ? "sorted descending"
@@ -119,14 +132,14 @@ export default function RolloutTable(props) {
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }} align="center">
                 <TableSortLabel
-                  active={orderBy === "CREATED BY"}
-                  direction={orderBy === "CREATED BY" ? order : "asc"}
+                  active={orderBy === "created_by"}
+                  direction={orderBy === "created_by" ? order : "asc"}
                   onClick={(event) => {
-                    handleRequestSort(event, "CREATED BY");
+                    handleRequestSort(event, "created_by");
                   }}
                 >
                   CREATED BY
-                  {orderBy === "CREATED BY" ? (
+                  {orderBy === "created_by" ? (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc"
                         ? "sorted descending"
@@ -137,14 +150,14 @@ export default function RolloutTable(props) {
               </TableCell>
               <TableCell style={{ fontWeight: "bold" }} align="center">
                 <TableSortLabel
-                  active={orderBy === "CREATED AT"}
-                  direction={orderBy === "CREATED AT" ? order : "asc"}
+                  active={orderBy === "created_at"}
+                  direction={orderBy === "created_at" ? order : "asc"}
                   onClick={(event) => {
-                    handleRequestSort(event, "CREATED AT");
+                    handleRequestSort(event, "created_at");
                   }}
                 >
                   CREATED AT
-                  {orderBy === "CREATED AT" ? (
+                  {orderBy === "created_at" ? (
                     <Box component="span" sx={visuallyHidden}>
                       {order === "desc"
                         ? "sorted descending"
@@ -208,7 +221,7 @@ export default function RolloutTable(props) {
                     currentStatusIndex={row.rollout_status}
                     intialOption={row.status}
                     onChange={(optionIndex) => {
-                      rolloutOnChange(row.id,row.rollout_name, optionIndex);
+                      rolloutOnChange(row.id, row.rollout_name, optionIndex);
                     }}
                   />
                 </TableCell>
