@@ -37,7 +37,7 @@ function BasicSelect(props) {
 }
 
 export default function Filter(props) {
-  const { style, filters, selectedFilters, setSelectedFilters, onApply } =
+  const { style, filters, selectedFilters, setSelectedFilters } =
     props;
   const filterTypeOptions = filters.map((a) => a.filterType);
   return (
@@ -49,7 +49,6 @@ export default function Filter(props) {
             dropdownProperty={filterType}
             dropdownItems={filters[index].filterOptions}
             defaultValue={selectedFilters[filterType]}
-            onChange={onApply}
             setIndex={(index) =>
               setSelectedFilters({ ...selectedFilters, [filterType]: index })
             }

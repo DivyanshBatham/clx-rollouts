@@ -100,14 +100,24 @@ export default function Dashboard() {
     },
   ];
 
+  const fetchData = () => {
+    let URL = "http://127.0.0.1:8000/rollout/filter/";
+    let params = {};
+    params.limit = 100;
+    params.offset = 0;
+    if (selectedFilters.status !== 0) params.status = selectedFilters.status;
+    if (selectedFilters.type !== 0) params.type = selectedFilters.type;
+    if (selectedFilters.level !== 0) params.level = selectedFilters.level;
+    if (searchText.length > 0) params.search_id = searchText;
+    axios.get(URL, { params }).then((res) => {
+      console.log(res.data);
+      setTableData(res.data);
+    });
+  };
+
   useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/rollout/filter/?limit=100&offset=0&status=1`)
-      .then((res) => {
-        console.log(res.data);
-        setTableData(res.data);
-      });
-  }, []);
+    fetchData();
+  }, [selectedFilters]);
 
   const handleCreateRollout = () => {
     setRolloutInfo({
@@ -160,30 +170,21 @@ export default function Dashboard() {
   };
 
   const onFilterApply = () => {
-    let URL = "http://127.0.0.1:8000/rollout/filter/?limit=100&offset=0";
-    if (selectedFilters.status !== 0)
-      URL += "&status=" + selectedFilters.status;
-    if (selectedFilters.type !== 0) URL += "&type=" + selectedFilters.type;
-    if (selectedFilters.level !== 0) URL += "&level=" + selectedFilters.level;
-    console.log(URL);
-    axios.get(URL).then((res) => {
-      console.log(res.data);
-      setTableData(res.data);
-    });
+    // let URL = "http://127.0.0.1:8000/rollout/filter/?limit=100&offset=0";
+    // if (selectedFilters.status !== 0)
+    //   URL += "&status=" + selectedFilters.status;
+    // if (selectedFilters.type !== 0) URL += "&type=" + selectedFilters.type;
+    // if (selectedFilters.level !== 0) URL += "&level=" + selectedFilters.level;
+    // console.log(URL);
+    // axios.get(URL).then((res) => {
+    //   console.log(res.data);
+    //   setTableData(res.data);
+    // });
   };
 
   const handleSearch = () => {
-    let URL = "http://127.0.0.1:8000/rollout/filter/?limit=100&offset=0";
-    if (selectedFilters.status !== 0)
-      URL += "&status=" + selectedFilters.status;
-    if (selectedFilters.type !== 0) URL += "&type=" + selectedFilters.type;
-    if (selectedFilters.level !== 0) URL += "&level=" + selectedFilters.level;
-    URL += "&search_id=" + searchText;
-    console.log(URL);
-    axios.get(URL).then((res) => {
-      console.log(res.data);
-      setTableData(res.data);
-    });
+    console.log(searchText + " is searched");
+    fetchData();
   };
   const PER_PAGE = 5;
   const count = Math.ceil(tableData.length / PER_PAGE);
@@ -217,131 +218,6 @@ export default function Dashboard() {
   return (
     <>
       <CssBaseline />
-      {/* //       <Box component="nav">
-//         <AppBar position="static" style={{ backgroundColor: "#ACCBF7" }}>
-//           <Toolbar>
-//             <UnacademyLogo
-//               width={182}
-//               height={64}
-//               style={{ marginLeft: "1vw" }}
-//             />
-//             <Typography
-//               variant="h4"
-//               style={{
-//                 marginLeft: "1vw",
-//                 color: "#2d81f7",
-//                 fontWeight: "Bold",
-//               }}
-//             >
-//               Rollouts
-//             </Typography>
-//             <Search
-//               style={{ marginLeft: "15vw", width: "30vw" }}
-//               searchText={searchText}
-//               setSearchText={setSearchText}
-//               onSearch={() => console.log(searchText + " is searched.")}
-//             />
-//             <FilterDropDown
-//               style={{ marginLeft: "15vw" }}
-//               filters={filters}
-//               selectedFilters={selectedFilters}
-//               setSelectedFilters={setSelectedFilters}
-//               onApply={onFilterApply}
-//             />
-//             <AddButton
-//               style={{ marginLeft: "2vw" }}
-//               toolTipTitle="Add a new Rollout"
-//               handleClick={handleCreateRollout}
-//             />
-
-//             <Drawer
-//               open={viewRolloutOpen || createRolloutOpen || editRolloutOpen}
-//               anchor="right"
-//               onClose={() => {
-//                 if (viewRolloutOpen) {
-//                   setViewRolloutOpen(false);
-//                 } else if (createRolloutOpen) {
-//                   setCreateRolloutOpen(false);
-//                 } else {
-//                   setEditRolloutOpen(false);
-//                 }
-//               }}
-//             >
-//               <Rollout
-//                 editRolloutOpen={editRolloutOpen}
-//                 viewRolloutOpen={viewRolloutOpen}
-//                 createRolloutOpen={createRolloutOpen}
-//                 setEditRolloutOpen={setEditRolloutOpen}
-//                 setViewRolloutOpen={setViewRolloutOpen}
-//                 setCreateRolloutOpen={setCreateRolloutOpen}
-//                 setViewConfigOpen={setViewConfigOpen}
-//                 isConfigured={isConfigured}
-//                 setCreateConfigOpen={setCreateConfigOpen}
-//                 rolloutInfo={rolloutInfo}
-//                 setRolloutInfo={setRolloutInfo}
-//                 rolloutConfigInfo={rolloutConfigInfo}
-//                 setRolloutConfigInfo={setRolloutConfigInfo}
-//               />
-//             </Drawer>
-//             <Drawer
-//               open={editConfigOpen || createConfigOpen || viewConfigOpen}
-//               anchor="right"
-//               onClose={() => {
-//                 if (viewConfigOpen) {
-//                   setViewConfigOpen(false);
-//                 } else if (createConfigOpen) {
-//                   setCreateConfigOpen(false);
-//                 } else {
-//                   setEditConfigOpen(false);
-//                 }
-//               }}
-//             >
-//               <Config
-//                 rolloutConfigInfo={rolloutConfigInfo}
-//                 setRolloutConfigInfo={setRolloutConfigInfo}
-//                 createConfigOpen={createConfigOpen}
-//                 viewConfigOpen={viewConfigOpen}
-//                 editConfigOpen={editConfigOpen}
-//                 setEditConfigOpen={setEditConfigOpen}
-//                 setViewConfigOpen={setViewConfigOpen}
-//                 setCreateConfigOpen={setCreateConfigOpen}
-//               />
-//             </Drawer>
-//           </Toolbar>
-//         </AppBar>
-//       </Box>
-//       <RolloutTable
-//         style={{
-//           marginTop: "2vh",
-//           marginLeft: "1vw",
-//           marginRight: "1vw",
-//           border: "3px #ACCBF7 solid",
-//           borderRadius: "10px",
-//         }}
-//         options={options}
-//         rows={_DATA.currentData()}
-//         onRolloutClick={(index) => handleRolloutClick(index)}
-//         rolloutOnChange={(index, optionIndex) =>
-//           console.log(rows[index].name + " got " + options[optionIndex])
-//         }
-//       />
-//       <div
-//         style={{
-//           marginTop: "1vh",
-//           display: "flex",
-//           alignItems: "center",
-//           justifyContent: "center",
-//         }}
-//       >
-//         <Pagination
-//           count={count}
-//           size="large"
-//           page={page}
-//           variant="outlined"
-//           shape="rounded"
-//           onChange={handleChange}
-//         />
-//       </div> */}
       <Navbar />
       <Container maxWidth="lg">
         <Stack
@@ -370,15 +246,12 @@ export default function Dashboard() {
             style={{ width: "20vw" }}
             searchText={searchText}
             setSearchText={setSearchText}
-            onSearch={() => {
-              handleSearch;
-            }}
+            onSearch={handleSearch}
           />
           <Filters
             filters={filters}
             selectedFilters={selectedFilters}
             setSelectedFilters={setSelectedFilters}
-            onApply={onFilterApply}
           />
           {/* <FilterDropDown
             style={{ marginTop: "1vh" }}
