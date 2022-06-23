@@ -6,7 +6,14 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 export default function ThreeDotDropDown(props) {
-  const { style, options, intialOption, onChange,nextStatusOptionIndexes,currentStatusIndex } = props;
+  const {
+    style,
+    options,
+    intialOption,
+    onChange,
+    nextStatusOptionIndexes,
+    currentStatusIndex,
+  } = props;
   const [anchor, setAnchor] = useState(null);
 
   const [selected, setSelected] = useState(0);
@@ -36,7 +43,7 @@ export default function ThreeDotDropDown(props) {
         anchorEl={anchor}
         onClose={closeMenu}
         keepMounted
-        TransitionComponent={Slide}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
       >
         {nextStatusOptionIndexes[currentStatusIndex].map((index) => (
           <MenuItem

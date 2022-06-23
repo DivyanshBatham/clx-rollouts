@@ -8,12 +8,23 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 // props will have info about heading, details
 export default function ActionPopup(props) {
-  const { open, setOpen,rolloutName,rolloutId, toStatus,optionIndex, details, agreeText, disagreeText,onRolloutChange } = props;
+  const {
+    open,
+    setOpen,
+    rolloutName,
+    rolloutId,
+    toStatus,
+    optionIndex,
+    details,
+    agreeText,
+    disagreeText,
+    onRolloutChange,
+  } = props;
 
   const handleYes = () => {
-    onRolloutChange(rolloutId,optionIndex);
+    onRolloutChange(rolloutId, optionIndex);
     setOpen(false);
-  }
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -27,11 +38,14 @@ export default function ActionPopup(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title" style={{ textAlign: "center" }}>
-          {"Do you want to change the status of "+rolloutName+" to "+toStatus}
+          {"Are you sure?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {details}
+            {"Do you want to change the status of " +
+              rolloutName +
+              " to " +
+              toStatus}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
