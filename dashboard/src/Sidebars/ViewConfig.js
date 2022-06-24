@@ -210,12 +210,17 @@ export default function CustomizedAccordions(props) {
                   isGoalOpen={true}
                 />
               </AccordionDetails>
+              <Stack style={{
+                  marginLeft: "23vw",
+                  marginBottom: "1vh",
+                }}
+                direction = "row"
+                spacing={3}
+                >
               <Button
                 variant="contained"
                 color="primary"
                 style={{
-                  marginLeft: "23vw",
-                  marginBottom: "1vh",
                   backgroundColor: "red",
                 }}
                 onClick={() => handleDelete(field.config_id)}
@@ -225,11 +230,12 @@ export default function CustomizedAccordions(props) {
               <Button
                 variant="contained"
                 color="primary"
-                style={{ marginLeft: "1vw", marginBottom: "1vh" }}
+                style={{ marginLeft: "1vw" }}
                 onClick={() => handleEdit(field)}
               >
                 Edit Details
               </Button>
+              </Stack>
             </Accordion>
           );
         })}
