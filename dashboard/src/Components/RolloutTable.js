@@ -30,9 +30,14 @@ export default function RolloutTable(props) {
     "Live",
     "Success",
     "Cancelled",
-    "Paused",
     "Failed",
+    "Paused",
   ];
+  // const STATUS = {
+  //   CREATED: 0,
+  //   LIVE: 1,
+  //   SU
+  // }
   const level_list = ["Goal", "Class", "Educator", "Course"];
   const type_list = ["Feature", "Deployment"];
   const nextStatusOptionIndexes = {
@@ -40,8 +45,8 @@ export default function RolloutTable(props) {
     1: [2, 4, 5],
     2: [],
     3: [],
-    4: [1, 3],
-    5: [],
+    4: [],
+    5: [1, 3],
   };
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Name");

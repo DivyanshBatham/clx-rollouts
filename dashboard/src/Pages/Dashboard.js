@@ -73,8 +73,8 @@ export default function Dashboard() {
     "Live",
     "Success",
     "Cancelled",
-    "Paused",
     "Failure",
+    "Paused",
   ];
   const TYPE_MAPPING = ["Feature", "Deployment"];
   const LEVEL_MAPPING = ["Goal", "Class", "Educator", "Course"];
@@ -84,8 +84,8 @@ export default function Dashboard() {
     "Go Live",
     "Mark it as Success",
     "Cancel",
-    "Pause",
     "Mark it as Failure",
+    "Pause",
   ];
   const filters = [
     {
@@ -95,8 +95,8 @@ export default function Dashboard() {
         "Live",
         "Success",
         "Cancelled",
-        "Paused",
         "Failure",
+        "Paused",
         "All Statuses",
       ],
     },
@@ -111,7 +111,7 @@ export default function Dashboard() {
   ];
 
   const fetchData = () => {
-    let URL = "http://127.0.0.1:8000/rollout/filter/";
+    let URL = "http://127.0.0.1:8000/rollout/filter";
     let params = {};
     params.limit = pageOffset.limit;
     params.offset = pageOffset.offset;
@@ -132,6 +132,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchData();
+    // axios.get('http://127.0.0.1:8000/rollout/next_status').then((res) => set)
   }, [selectedFilters, sortProperties, pageOffset]);
 
   const handleCreateRollout = () => {
