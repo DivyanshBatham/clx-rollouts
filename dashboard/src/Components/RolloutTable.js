@@ -244,7 +244,7 @@ export default function RolloutTable(props) {
                   style={{ cursor: "pointer" }}
                   align="center"
                 >
-                  {row.created_at}
+                  {new Date(row.created_at).toLocaleString()}
                 </TableCell>
                 <TableCell align="right">
                   <ThreeDotDropDown
