@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
@@ -12,6 +12,7 @@ import Paper from "@mui/material/Paper";
 import ThreeDotDropDown from "./ThreeDotDropDown";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { visuallyHidden } from "@mui/utils";
+import axios from "axios";
 
 export default function RolloutTable(props) {
   const {
@@ -40,14 +41,22 @@ export default function RolloutTable(props) {
   // }
   const level_list = ["Goal", "Class", "Educator", "Course"];
   const type_list = ["Feature", "Deployment"];
-  const nextStatusOptionIndexes = {
+  // const nextStatusOptionIndexes = {
+  //   0: [1, 3],
+  //   1: [2, 4, 5],
+  //   2: [],
+  //   3: [],
+  //   4: [],
+  //   5: [1, 3],
+  // };
+  const [nextStatusOptionIndexes, setNextStatusOptionIndexes] = useState({
     0: [1, 3],
     1: [2, 4, 5],
     2: [],
     3: [],
     4: [],
     5: [1, 3],
-  };
+  });
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("Name");
   const [page, setPage] = useState(1);
@@ -62,6 +71,12 @@ export default function RolloutTable(props) {
     });
     console.log("Request to sort table with " + property + " in " + isAsc);
   };
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8000/rollout/next_status").then((res) => {
+      // console.log(res.data.data);
+      setNextStatusOptionIndexes(res.data.data);
+    });
+  }, []);
   const handleChangePage = (e, p) => {
     console.log(p);
     setPage(p);

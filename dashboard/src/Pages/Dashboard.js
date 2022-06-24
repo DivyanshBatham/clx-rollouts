@@ -53,13 +53,12 @@ export default function Dashboard() {
     type: 0,
     level: 0,
   });
-  const [actionPopupRolloutDetails, setActionPopupRolloutDetails] =
-    React.useState({
-      rolloutId: 0,
-      rolloutName: "",
-      toStatus: "",
-      optionIndex: 0,
-    });
+  const [actionPopupRolloutDetails, setActionPopupRolloutDetails] = useState({
+    rolloutId: 0,
+    rolloutName: "",
+    toStatus: "",
+    optionIndex: 0,
+  });
   const [sortProperties, setSortProperties] = useState({
     property: "",
     order: "",
@@ -132,7 +131,6 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchData();
-    // axios.get('http://127.0.0.1:8000/rollout/next_status').then((res) => set)
   }, [selectedFilters, sortProperties, pageOffset]);
 
   const handleCreateRollout = () => {
@@ -215,6 +213,7 @@ export default function Dashboard() {
         console.log(res);
         console.log(res.data.message);
       });
+    fetchData();
   };
   const handleSort = (order, property) => {
     setSortProperties({
