@@ -316,6 +316,7 @@ export default function Dashboard() {
             setViewGoalConfigOpen={setViewGoalConfigOpen}
             goalConfigInfo={goalConfigInfo}
             setGoalConfigInfo={setGoalConfigInfo}
+            fetchData = {fetchData}
           />
         </Drawer>
         <Drawer

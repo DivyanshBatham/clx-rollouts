@@ -191,6 +191,7 @@ export default function Playground(props) {
           console.log(res);
           console.log(res.data.message);
         });
+        props.fetchData();
         setCreateRolloutOpen(false);
         setRolloutInfo({
           ...rolloutInfo,
