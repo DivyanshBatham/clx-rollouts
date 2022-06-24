@@ -78,7 +78,7 @@ export default function Dashboard() {
     order: "",
   });
   const [pageOffset, setPageOffset] = useState({
-    limit: 5,
+    limit: 8,
     offset: 0,
   });
   const STATUS_MAPPING = [
