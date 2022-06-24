@@ -64,7 +64,7 @@ export default function EditConfiguration(props) {
           console.log("before click :", createInfo);
           axios
             .put(
-              `http://127.0.0.1:8000/rollout/${props.configID}/configuration`,
+              `${process.env.REACT_APP_API_HOST}/rollout/${props.configID}/configuration`,
               createInfo
             )
             .then((res) => {
@@ -98,7 +98,7 @@ export default function EditConfiguration(props) {
               console.log("before click :", createInfo);
               axios
                 .post(
-                  `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
+                  `${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`,
                   createInfo
                 )
                 .then((res) => {
@@ -120,7 +120,7 @@ export default function EditConfiguration(props) {
             ) {
               axios
                 .delete(
-                  `http://127.0.0.1:8000/rollout/${configData["config_ids"][i]}/configuration`
+                  `${process.env.REACT_APP_API_HOST}/rollout/${configData["config_ids"][i]}/configuration`
                 )
                 .then((res) => {
                   console.log(res.data.message);
@@ -146,7 +146,7 @@ export default function EditConfiguration(props) {
                   };
                   axios
                     .put(
-                      `http://127.0.0.1:8000/rollout/${configData["config_ids"][i]}/configuration`,
+                      `${process.env.REACT_APP_API_HOST}/rollout/${configData["config_ids"][i]}/configuration`,
                       createInfo
                     )
                     .then((res) => {
@@ -202,7 +202,7 @@ export default function EditConfiguration(props) {
           console.log("before click :", createInfo);
           axios
             .post(
-              `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
+              `${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`,
               createInfo
             )
             .then((res) => {
@@ -228,7 +228,7 @@ export default function EditConfiguration(props) {
             console.log("before click :", createInfo);
             axios
               .post(
-                `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
+                `${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`,
                 createInfo
               )
               .then((res) => {

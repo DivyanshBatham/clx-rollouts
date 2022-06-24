@@ -136,7 +136,7 @@ export default function CustomizedAccordions(props) {
 
   const handleDelete = (ConfigId) => {
     axios
-      .delete(`http://127.0.0.1:8000/rollout/${ConfigId}/configuration`)
+      .delete(`${process.env.REACT_APP_API_HOST}/rollout/${ConfigId}/configuration`)
       .then((res) => {
         console.log(res.data.message);
       });

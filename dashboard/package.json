@@ -19,14 +19,15 @@
   },
   "devDependencies": {
     "@babel/runtime": "7.13.8",
-    "typescript": "4.1.3",
-    "serve": "^13.0.2"
+    "serve": "^13.0.2",
+    "typescript": "4.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "serve -l 3001 ./build"
   },
   "browserslist": [
     ">0.2%",

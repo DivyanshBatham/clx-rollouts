@@ -1,3 +1,5 @@
+console.log(process.env);
+console.log(process.env.REACT_APP_API_HOST);
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 

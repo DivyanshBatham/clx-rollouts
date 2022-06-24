@@ -72,7 +72,7 @@ export default function RolloutTable(props) {
     console.log("Request to sort table with " + property + " in " + isAsc);
   };
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/rollout/next_status").then((res) => {
+    axios.get(`${process.env.REACT_APP_API_HOST}/rollout/next_status`).then((res) => {
       // console.log(res.data.data);
       setNextStatusOptionIndexes(res.data.data);
     });

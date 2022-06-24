@@ -127,7 +127,7 @@ export default function Playground(props) {
         };
 
         axios
-          .put(`http://127.0.0.1:8000/rollout/${props.rolloutId}`, editedInfo)
+          .put(`${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}`, editedInfo)
           .then((res) => {
             console.log(res);
             console.log(res.data.message);
@@ -187,7 +187,7 @@ export default function Playground(props) {
         };
         console.log(createInfo);
         console.log("New Rollout created sucessfully");
-        axios.post(`http://127.0.0.1:8000/rollout`, createInfo).then((res) => {
+        axios.post(`${process.env.REACT_APP_API_HOST}/rollout`, createInfo).then((res) => {
           console.log(res);
           console.log(res.data.message);
         });
@@ -224,7 +224,7 @@ export default function Playground(props) {
     if (props.isConfigured === true) {
       if(rolloutInfo.rolloutLevel === "Goal") {
         axios
-          .get(`http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`)
+          .get(`${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`)
           .then((res) => {
             console.log(res);
             props.setGoalConfigInfo(res.data);
@@ -237,7 +237,7 @@ export default function Playground(props) {
       console.log("View config button clicked");
       // get configuration info and set in the state
       axios
-        .get(`http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`)
+        .get(`${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`)
         .then((res) => {
           console.log(res);
 

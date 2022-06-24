@@ -124,7 +124,7 @@ export default function Dashboard() {
   ];
 
   const fetchData = () => {
-    let URL = "http://127.0.0.1:8000/rollout/filter/";
+    let URL = `${process.env.REACT_APP_API_HOST}/rollout/filter/`;
     let params = {};
     params.limit = pageOffset.limit;
     params.offset = pageOffset.offset;
@@ -172,7 +172,7 @@ export default function Dashboard() {
       rolloutLevel: "Class",
     });
 
-    axios.get(`http://127.0.0.1:8000/rollout/${ID}`).then((res) => {
+    axios.get(`${process.env.REACT_APP_API_HOST}/rollout/${ID}`).then((res) => {
       console.log(res.data);
       setRolloutInfo({
         ...rolloutInfo,
@@ -183,7 +183,7 @@ export default function Dashboard() {
       });
     });
     axios
-      .get(`http://127.0.0.1:8000/rollout/${ID}/configuration`)
+      .get(`${process.env.REACT_APP_API_HOST}/rollout/${ID}/configuration`)
       .then((res) => {
         console.log(res.data);
         if (res.data.length !== 0) {
@@ -222,7 +222,7 @@ export default function Dashboard() {
   };
   const onRolloutChange = (rolloutId, optionIndex) => {
     axios
-      .put(`http://127.0.0.1:8000/rollout/${rolloutId}/status/${optionIndex}`)
+      .put(`${process.env.REACT_APP_API_HOST}/rollout/${rolloutId}/status/${optionIndex}`)
       .then((res) => {
         console.log(res);
         console.log(res.data.message);
