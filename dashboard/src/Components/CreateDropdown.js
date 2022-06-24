@@ -15,14 +15,6 @@ export default function BasicSelect(props) {
     propertyMapping,
   } = props;
 
-  // const textFieldColor = "black";
-  // const textFieldSX = {
-  //   input: {
-  //     "-webkit-text-fill-color": `${textFieldColor} !important`,
-  //     color: `${textFieldColor} !important`,
-  //   },
-  // };
-
   return (
     <Box style={dropdownStyle.box}>
       <InputLabel id="demo-simple-select-label" required>

@@ -1,18 +1,15 @@
-import { Autocomplete, TextField, Chip } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
+import Chip from "@mui/material/Chip";
 import React, { useEffect } from "react";
 import InputLabel from "@mui/material/InputLabel";
 
 export default function ChipComponent(props) {
-  React.useEffect(() => {
-    console.log(props.rolloutInfo);
-  }, [props.rolloutInfo]);
-
   return (
     <div>
       <InputLabel
         id="demo-simple-select-label"
         required
-        style={{ marginLeft: "10%" }}
+        style={{ marginLeft: props.isGoalOpen ? "0" : "10%" }}
       >
         {props.dropdownProperty}
       </InputLabel>
@@ -38,6 +35,7 @@ export default function ChipComponent(props) {
           value.map((option, index) => {
             return (
               <Chip
+                size="medium"
                 key={index}
                 variant="outlined"
                 label={option}

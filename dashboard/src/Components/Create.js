@@ -5,13 +5,6 @@ import InputLabel from "@mui/material/InputLabel";
 
 export default function FormPropsTextFields(props) {
   const { rolloutInfo, setRolloutInfo, propertyMapping } = props;
-  // const textFieldColor = "black"
-  // const textFieldSX = {
-  //   input: {
-  //     "-webkit-text-fill-color": `${textFieldColor} !important`,
-  //     color: `${textFieldColor} !important`,
-  //   },
-  // };
 
   return (
     <div>
