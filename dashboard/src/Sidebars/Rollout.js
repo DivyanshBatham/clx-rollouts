@@ -30,8 +30,8 @@ export default function Playground(props) {
   });
 
   const TYPE_MAPPING = {
-    Feature: 1,
-    Deployment: 2,
+    Frontend: 1,
+    Backend: 2,
   };
 
   const LEVEL_MAPPING = {
@@ -63,7 +63,7 @@ export default function Playground(props) {
   const formData = [
     createFormData("Rollout Name", [], true),
     createFormData("Description", [], true),
-    createFormData("Rollout Type", ["Feature", "Deployment"], true),
+    createFormData("Rollout Type", ["Frontend", "Backend"], true),
     createFormData(
       "Rollout Level",
       ["Goal", "Class", "Educator", "Course"],
@@ -127,7 +127,10 @@ export default function Playground(props) {
         };
 
         axios
-          .put(`${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}`, editedInfo)
+          .put(
+            `${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}`,
+            editedInfo
+          )
           .then((res) => {
             console.log(res);
             console.log(res.data.message);
@@ -187,10 +190,12 @@ export default function Playground(props) {
         };
         console.log(createInfo);
         console.log("New Rollout created sucessfully");
-        axios.post(`${process.env.REACT_APP_API_HOST}/rollout`, createInfo).then((res) => {
-          console.log(res);
-          console.log(res.data.message);
-        });
+        axios
+          .post(`${process.env.REACT_APP_API_HOST}/rollout`, createInfo)
+          .then((res) => {
+            console.log(res);
+            console.log(res.data.message);
+          });
         props.fetchData();
         setCreateRolloutOpen(false);
         setRolloutInfo({
@@ -222,9 +227,11 @@ export default function Playground(props) {
     // TO DO : get the info from database if configuration is available
     // If config is is already created, then button is open config otherise create config
     if (props.isConfigured === true) {
-      if(rolloutInfo.rolloutLevel === "Goal") {
+      if (rolloutInfo.rolloutLevel === "Goal") {
         axios
-          .get(`${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`)
+          .get(
+            `${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`
+          )
           .then((res) => {
             console.log(res);
             props.setGoalConfigInfo(res.data);
@@ -232,44 +239,45 @@ export default function Playground(props) {
           .catch((err) => {
             console.log(err);
           });
-      }
-      else {
-      console.log("View config button clicked");
-      // get configuration info and set in the state
-      axios
-        .get(`${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`)
-        .then((res) => {
-          console.log(res);
+      } else {
+        console.log("View config button clicked");
+        // get configuration info and set in the state
+        axios
+          .get(
+            `${process.env.REACT_APP_API_HOST}/rollout/${props.rolloutId}/configuration`
+          )
+          .then((res) => {
+            console.log(res);
 
-          const uids = res.data.map((obj) => {
-            return obj.object_uid;
-          });
-          
-          const config_ids = res.data.map((obj) => {
-            return obj.config_id;
-          });
+            const uids = res.data.map((obj) => {
+              return obj.object_uid;
+            });
 
-          console.log(uids);
-          setRolloutConfigInfo({
-            ...rolloutConfigInfo,
-            config_ids: config_ids,
-            object_uid: uids,
-            value: res.data[0]["value"],
-            rolloutStartRange: res.data[0]["rollout_start_range"],
-            rolloutEndRange: res.data[0]["rollout_end_range"],
+            const config_ids = res.data.map((obj) => {
+              return obj.config_id;
+            });
+
+            console.log(uids);
+            setRolloutConfigInfo({
+              ...rolloutConfigInfo,
+              config_ids: config_ids,
+              object_uid: uids,
+              value: res.data[0]["value"],
+              rolloutStartRange: res.data[0]["rollout_start_range"],
+              rolloutEndRange: res.data[0]["rollout_end_range"],
+            });
+          })
+          .catch((err) => {
+            console.log(err);
           });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
       }
       setViewRolloutOpen(false);
       setTimeout(() => {
-        if(rolloutInfo.rolloutLevel === "Goal"){
-        setViewGoalConfigOpen(true);
+        if (rolloutInfo.rolloutLevel === "Goal") {
+          setViewGoalConfigOpen(true);
         } else {
-        setViewConfigOpen(true);
-      }
+          setViewConfigOpen(true);
+        }
       }, 500);
     } else {
       console.log("create config button clicked");

@@ -44,7 +44,7 @@ export default function Dashboard() {
   const [rolloutInfo, setRolloutInfo] = React.useState({
     rolloutName: "Hand raise feature",
     description: "During live class it is useful to ask doubts",
-    rolloutType: "Feature",
+    rolloutType: "Frontend",
     rolloutLevel: "Class",
   });
   const [rolloutConfigInfo, setRolloutConfigInfo] = React.useState({
@@ -89,7 +89,7 @@ export default function Dashboard() {
     "Failure",
     "Paused",
   ];
-  const TYPE_MAPPING = ["Feature", "Deployment"];
+  const TYPE_MAPPING = ["Frontend", "Backend"];
   const LEVEL_MAPPING = ["Goal", "Class", "Educator", "Course"];
 
   const options = [
@@ -115,7 +115,7 @@ export default function Dashboard() {
     },
     {
       filterType: "type",
-      filterOptions: ["All Types", "Feature", "Deployment"],
+      filterOptions: ["All Types", "Frontend", "Backend"],
     },
     {
       filterType: "level",
@@ -168,7 +168,7 @@ export default function Dashboard() {
       ...rolloutInfo,
       rolloutName: "Hand raise feature",
       description: "During live class it is useful to ask doubts",
-      rolloutType: "Feature",
+      rolloutType: "Frontend",
       rolloutLevel: "Class",
     });
 
@@ -222,7 +222,9 @@ export default function Dashboard() {
   };
   const onRolloutChange = (rolloutId, optionIndex) => {
     axios
-      .put(`${process.env.REACT_APP_API_HOST}/rollout/${rolloutId}/status/${optionIndex}`)
+      .put(
+        `${process.env.REACT_APP_API_HOST}/rollout/${rolloutId}/status/${optionIndex}`
+      )
       .then((res) => {
         console.log(res);
         console.log(res.data.message);

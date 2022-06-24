@@ -40,7 +40,7 @@ export default function RolloutTable(props) {
   //   SU
   // }
   const level_list = ["Goal", "Class", "Educator", "Course"];
-  const type_list = ["Feature", "Deployment"];
+  const type_list = ["Frontend", "Backend"];
   // const nextStatusOptionIndexes = {
   //   0: [1, 3],
   //   1: [2, 4, 5],
@@ -72,10 +72,12 @@ export default function RolloutTable(props) {
     console.log("Request to sort table with " + property + " in " + isAsc);
   };
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_HOST}/rollout/next_status`).then((res) => {
-      // console.log(res.data.data);
-      setNextStatusOptionIndexes(res.data.data);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_HOST}/rollout/next_status`)
+      .then((res) => {
+        // console.log(res.data.data);
+        setNextStatusOptionIndexes(res.data.data);
+      });
   }, []);
   const handleChangePage = (e, p) => {
     console.log(p);
