@@ -48,7 +48,7 @@ export default function Dashboard() {
     rolloutLevel: "Class",
   });
   const [rolloutConfigInfo, setRolloutConfigInfo] = React.useState({
-    config_ids:[],
+    config_ids: [],
     object_uid: ["abcd", "efgh"],
     value: "Java",
     rolloutStartRange: 5,
@@ -124,7 +124,7 @@ export default function Dashboard() {
   ];
 
   const fetchData = () => {
-    let URL = "http://127.0.0.1:8000/rollout/filter";
+    let URL = "http://127.0.0.1:8000/rollout/filter/";
     let params = {};
     params.limit = pageOffset.limit;
     params.offset = pageOffset.offset;
@@ -316,7 +316,7 @@ export default function Dashboard() {
             setViewGoalConfigOpen={setViewGoalConfigOpen}
             goalConfigInfo={goalConfigInfo}
             setGoalConfigInfo={setGoalConfigInfo}
-            fetchData = {fetchData}
+            fetchData={fetchData}
           />
         </Drawer>
         <Drawer
@@ -345,7 +345,7 @@ export default function Dashboard() {
             rolloutInfo={rolloutInfo}
             configID={configID}
             setConfigID={setConfigID}
-            configData= {configData}
+            configData={configData}
             setConfigData={setConfigData}
           />
         </Drawer>
