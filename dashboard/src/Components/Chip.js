@@ -49,6 +49,9 @@ export default function ChipComponent(props) {
         }
         renderInput={(params) => (
           <TextField
+            error={
+              props.reqError[props.propertyMapping[props.dropdownProperty]]
+            }
             {...params}
             // label={props.dropdownProperty}
             placeholder="Add an object uid by pressing enter"

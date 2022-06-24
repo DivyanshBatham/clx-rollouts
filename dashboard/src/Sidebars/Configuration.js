@@ -15,7 +15,7 @@ export default function EditConfiguration(props) {
     rolloutConfigInfo,
     setRolloutConfigInfo,
     configData,
-    setConfigData
+    setConfigData,
   } = props;
   const [reqError, setReqError] = React.useState({
     object_uid: false,
@@ -38,12 +38,18 @@ export default function EditConfiguration(props) {
   const handleClick = () => {
     if (editConfigOpen) {
       if (
-        rolloutConfigInfo.object_uid === [] ||
+        (props.rolloutInfo.rolloutLevel === "Goal" &&
+          rolloutConfigInfo.object_uid.length > 1) ||
+        rolloutConfigInfo.object_uid.length === 0 ||
         rolloutConfigInfo.value === ""
       ) {
         // Error : Fill required information
         console.log("Error : Fill required information");
-        if (rolloutConfigInfo.object_uid === []) {
+        if (
+          (props.rolloutInfo.rolloutLevel === "Goal" &&
+            rolloutConfigInfo.object_uid.length > 1) ||
+          rolloutConfigInfo.object_uid.length === 0
+        ) {
           setReqError({ ...reqError, object_uid: true });
         }
         if (rolloutConfigInfo.value === "") {
@@ -178,12 +184,18 @@ export default function EditConfiguration(props) {
       }
     } else if (createConfigOpen) {
       if (
-        rolloutConfigInfo.object_uid === [] ||
+        (props.rolloutInfo.rolloutLevel === "Goal" &&
+          rolloutConfigInfo.object_uid.length > 1) ||
+        rolloutConfigInfo.object_uid.length === 0 ||
         rolloutConfigInfo.value === ""
       ) {
         // Error : Fill required information
         console.log("Error : Fill required information");
-        if (rolloutConfigInfo.object_uid === []) {
+        if (
+          (props.rolloutInfo.rolloutLevel === "Goal" &&
+            rolloutConfigInfo.object_uid.length > 1) ||
+          rolloutConfigInfo.object_uid.length === 0
+        ) {
           setReqError({ ...reqError, object_uid: true });
         }
         if (rolloutConfigInfo.value === "") {
