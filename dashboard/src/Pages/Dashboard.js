@@ -21,12 +21,14 @@ import axios from "axios";
 import Navbar from "../Components/Navbar";
 import Filters from "../Components/Filters";
 import ActionPopup from "../Components/ActionPopup";
+import ViewConfig from "../Sidebars/ViewConfig";
 
 export default function Dashboard() {
   const [createRolloutOpen, setCreateRolloutOpen] = useState(false);
   const [viewRolloutOpen, setViewRolloutOpen] = useState(false);
   const [createConfigOpen, setCreateConfigOpen] = useState(false);
   const [viewConfigOpen, setViewConfigOpen] = useState(false);
+  const [viewGoalConfigOpen, setViewGoalConfigOpen] = useState(false);
   const [editRolloutOpen, setEditRolloutOpen] = useState(false);
   const [editConfigOpen, setEditConfigOpen] = useState(false);
   const [isConfigured, setIsConfigured] = useState(false);
@@ -34,6 +36,10 @@ export default function Dashboard() {
   const [searchText, setSearchText] = useState("");
   const [tableData, setTableData] = useState([]);
   const [actionPopupOpen, setActionPopupOpen] = useState(false);
+  const [configID, setConfigID] = useState("");
+
+  const [goalConfigInfo, setGoalConfigInfo] = useState({});
+
   const [rolloutInfo, setRolloutInfo] = React.useState({
     rolloutName: "Hand raise feature",
     description: "During live class it is useful to ask doubts",
@@ -41,10 +47,18 @@ export default function Dashboard() {
     rolloutLevel: "Class",
   });
   const [rolloutConfigInfo, setRolloutConfigInfo] = React.useState({
+    config_ids:[],
     object_uid: ["abcd", "efgh"],
     value: "Java",
     rolloutStartRange: 5,
     rolloutEndRange: 10,
+  });
+  const [configData, setConfigData] = React.useState({
+    config_ids: [],
+    object_uid: [],
+    value: "",
+    rolloutStartRange: 0,
+    rolloutEndRange: 0,
   });
   const [rolloutId, setRolloutId] = useState("");
   const [selectedFilters, setSelectedFilters] = useState({
@@ -287,6 +301,10 @@ export default function Dashboard() {
             rolloutConfigInfo={rolloutConfigInfo}
             setRolloutConfigInfo={setRolloutConfigInfo}
             rolloutId={rolloutId}
+            viewGoalConfigOpen={viewGoalConfigOpen}
+            setViewGoalConfigOpen={setViewGoalConfigOpen}
+            goalConfigInfo={goalConfigInfo}
+            setGoalConfigInfo={setGoalConfigInfo}
           />
         </Drawer>
         <Drawer
@@ -312,6 +330,46 @@ export default function Dashboard() {
             setViewConfigOpen={setViewConfigOpen}
             setCreateConfigOpen={setCreateConfigOpen}
             rolloutId={rolloutId}
+            rolloutInfo={rolloutInfo}
+            configID={configID}
+            setConfigID={setConfigID}
+            configData= {configData}
+            setConfigData={setConfigData}
+          />
+        </Drawer>
+
+        <Drawer
+          // open={editConfigOpen || createConfigOpen || viewConfigOpen}
+          open={viewGoalConfigOpen}
+          anchor="right"
+          onClose={() => {
+            if (viewGoalConfigOpen) {
+              setViewGoalConfigOpen(false);
+            }
+            // else
+            // if (createConfigOpen) {
+            //   setCreateConfigOpen(false);
+            // } else {
+            //   setEditConfigOpen(false);
+            // }
+          }}
+        >
+          <ViewConfig
+            rolloutConfigInfo={rolloutConfigInfo}
+            setRolloutConfigInfo={setRolloutConfigInfo}
+            createConfigOpen={createConfigOpen}
+            viewConfigOpen={viewConfigOpen}
+            editConfigOpen={editConfigOpen}
+            setEditConfigOpen={setEditConfigOpen}
+            setViewConfigOpen={setViewConfigOpen}
+            setCreateConfigOpen={setCreateConfigOpen}
+            rolloutId={rolloutId}
+            rolloutInfo={rolloutInfo}
+            goalConfigInfo={goalConfigInfo}
+            viewGoalConfigOpen={viewGoalConfigOpen}
+            setViewGoalConfigOpen={setViewGoalConfigOpen}
+            configID={configID}
+            setConfigID={setConfigID}
           />
         </Drawer>
         <RolloutTable

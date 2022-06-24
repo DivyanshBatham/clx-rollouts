@@ -18,6 +18,8 @@ export default function Playground(props) {
     setRolloutInfo,
     rolloutConfigInfo,
     setRolloutConfigInfo,
+    viewGoalConfigOpen,
+    setViewGoalConfigOpen,
   } = props;
 
   const [reqError, setReqError] = React.useState({
@@ -96,11 +98,15 @@ export default function Playground(props) {
         rolloutInfo.rolloutName === "" ||
         rolloutInfo.description === "" ||
         rolloutInfo.rolloutType === "" ||
-        rolloutInfo.rolloutLevel === ""
+        rolloutInfo.rolloutLevel === "" ||
+        rolloutInfo.rolloutName.split(" ").length > 1
       ) {
         // Error : Fill required information
         console.log("Error : Fill required information");
-        if (rolloutInfo.rolloutName === "") {
+        if (
+          rolloutInfo.rolloutName === "" ||
+          rolloutInfo.rolloutName.split(" ").length > 1
+        ) {
           setReqError({ ...reqError, rolloutName: true });
         }
         if (rolloutInfo.description === "") {
@@ -151,11 +157,15 @@ export default function Playground(props) {
         rolloutInfo.rolloutName === "" ||
         rolloutInfo.description === "" ||
         rolloutInfo.rolloutType === "" ||
-        rolloutInfo.rolloutLevel === ""
+        rolloutInfo.rolloutLevel === "" ||
+        rolloutInfo.rolloutName.split(" ").length > 1
       ) {
         // Error : Fill required information
         console.log("Error : Fill required information");
-        if (rolloutInfo.rolloutName === "") {
+        if (
+          rolloutInfo.rolloutName === "" ||
+          rolloutInfo.rolloutName.split(" ").length > 1
+        ) {
           setReqError({ ...reqError, rolloutName: true });
         }
         if (rolloutInfo.description === "") {
@@ -171,7 +181,7 @@ export default function Playground(props) {
         // request to backend to create new  rollout
         const createInfo = {
           description: rolloutInfo.description,
-          rollout_name: rolloutInfo.rolloutName,
+          rollout_name: rolloutInfo.rolloutName.toUpperCase(),
           rollout_type: TYPE_MAPPING[rolloutInfo.rolloutType],
           rollout_level: LEVEL_MAPPING[rolloutInfo.rolloutLevel],
         };
@@ -211,11 +221,54 @@ export default function Playground(props) {
     // TO DO : get the info from database if configuration is available
     // If config is is already created, then button is open config otherise create config
     if (props.isConfigured === true) {
+      if(rolloutInfo.rolloutLevel === "Goal") {
+        axios
+          .get(`http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`)
+          .then((res) => {
+            console.log(res);
+            props.setGoalConfigInfo(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      else {
       console.log("View config button clicked");
       // get configuration info and set in the state
+      axios
+        .get(`http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`)
+        .then((res) => {
+          console.log(res);
+
+          const uids = res.data.map((obj) => {
+            return obj.object_uid;
+          });
+          
+          const config_ids = res.data.map((obj) => {
+            return obj.config_id;
+          });
+
+          console.log(uids);
+          setRolloutConfigInfo({
+            ...rolloutConfigInfo,
+            config_ids: config_ids,
+            object_uid: uids,
+            value: res.data[0]["value"],
+            rolloutStartRange: res.data[0]["rollout_start_range"],
+            rolloutEndRange: res.data[0]["rollout_end_range"],
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      }
       setViewRolloutOpen(false);
       setTimeout(() => {
+        if(rolloutInfo.rolloutLevel === "Goal"){
+        setViewGoalConfigOpen(true);
+        } else {
         setViewConfigOpen(true);
+      }
       }, 500);
     } else {
       console.log("create config button clicked");
@@ -229,6 +282,11 @@ export default function Playground(props) {
       });
       setViewRolloutOpen(false);
       setTimeout(() => {
+        // if (rolloutInfo.rolloutLevel === "Goal") {
+        //   setViewGoalConfigOpen(true);
+        // } else {
+        //   setCreateConfigOpen(true);
+        // }
         setCreateConfigOpen(true);
       }, 500);
     }
@@ -238,13 +296,13 @@ export default function Playground(props) {
     <Box style={useStyles} component="div">
       <div
         style={{
-          backgroundColor: "#ACCBF7",
+          backgroundColor: "rgb(225, 229, 234)",
           marginTop: "0px",
         }}
       >
         <h1
           style={{
-            color: "#2d81f7",
+            color: "black",
             textAlign: "center",
             paddingTop: "1vw",
             paddingBottom: "1vw",

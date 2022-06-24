@@ -14,8 +14,9 @@ export default function EditConfiguration(props) {
     setEditConfigOpen,
     rolloutConfigInfo,
     setRolloutConfigInfo,
+    configData,
+    setConfigData
   } = props;
-  
   const [reqError, setReqError] = React.useState({
     object_uid: false,
     value: false,
@@ -34,15 +35,6 @@ export default function EditConfiguration(props) {
     "Rollout end range": "rolloutEndRange",
   };
 
-  /**
-   * Callback whenever any object deleted from configuration
-   */
-  const handleDelete = () => {
-    console.log("Delete the object uid.");
-    // ask for confirmation using validation popup
-    // TO DO: make api call to delete the object
-  };
-
   const handleClick = () => {
     if (editConfigOpen) {
       if (
@@ -58,7 +50,117 @@ export default function EditConfiguration(props) {
           setReqError({ ...reqError, value: true });
         }
       } else {
-        // request to backend to create new  rollout configuration
+        // request to backend to update the rollout configuration
+        console.log("rolloutConfigInfo: ", rolloutConfigInfo);
+        if (props.rolloutInfo.rolloutLevel === "Goal") {
+          const createInfo = {
+            object_uid: rolloutConfigInfo["object_uid"][0],
+            value: rolloutConfigInfo["value"],
+            rollout_start_range: parseInt(
+              rolloutConfigInfo["rolloutStartRange"]
+            ),
+            rollout_end_range: parseInt(rolloutConfigInfo["rolloutEndRange"]),
+          };
+          console.log("before click :", createInfo);
+          axios
+            .put(
+              `http://127.0.0.1:8000/rollout/${props.configID}/configuration`,
+              createInfo
+            )
+            .then((res) => {
+              console.log(res);
+              console.log(res.data.message);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          // Newly added
+          console.log("Rollout Config data: ", rolloutConfigInfo);
+          console.log("Old Config data: ", configData);
+          for (let i = 0; i < rolloutConfigInfo["object_uid"].length; i++) {
+            if (
+              configData["object_uid"].indexOf(
+                rolloutConfigInfo["object_uid"][i]
+              ) == -1
+            ) {
+              // Create config
+              const createInfo = {
+                object_uid: rolloutConfigInfo["object_uid"][i],
+                value: rolloutConfigInfo["value"],
+                rollout_start_range: parseInt(
+                  rolloutConfigInfo["rolloutStartRange"]
+                ),
+                rollout_end_range: parseInt(
+                  rolloutConfigInfo["rolloutEndRange"]
+                ),
+              };
+              console.log("before click :", createInfo);
+              axios
+                .post(
+                  `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
+                  createInfo
+                )
+                .then((res) => {
+                  console.log(res);
+                  console.log(res.data.message);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          }
+
+          // Delete
+          for (let i = 0; i < configData["object_uid"].length; i++) {
+            if (
+              rolloutConfigInfo["object_uid"].indexOf(
+                configData["object_uid"][i]
+              ) == -1
+            ) {
+              axios
+                .delete(
+                  `http://127.0.0.1:8000/rollout/${configData["config_ids"][i]}/configuration`
+                )
+                .then((res) => {
+                  console.log(res.data.message);
+                });
+            }
+
+            // Update
+            if (rolloutConfigInfo["value"] !== configData["value"]) {
+              for (let i = 0; i < configData["object_uid"].length; i++) {
+                if (
+                  rolloutConfigInfo["object_uid"].indexOf(
+                    configData["object_uid"][i]
+                  ) >= 0
+                ) {
+                  // Create config
+                  const createInfo = {
+                    object_uid: configData["object_uid"][i],
+                    value: configData["value"],
+                    rollout_start_range: parseInt(
+                      configData["rolloutStartRange"]
+                    ),
+                    rollout_end_range: parseInt(configData["rolloutEndRange"]),
+                  };
+                  axios
+                    .put(
+                      `http://127.0.0.1:8000/rollout/${configData["config_ids"][i]}/configuration`,
+                      createInfo
+                    )
+                    .then((res) => {
+                      console.log(res);
+                      console.log(res.data.message);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
+              }
+            }
+          }
+        }
         console.log("Rollout configuration updated sucessfully");
         setEditConfigOpen(false);
         setRolloutConfigInfo({
@@ -88,27 +190,56 @@ export default function EditConfiguration(props) {
           setReqError({ ...reqError, value: true });
         }
       } else {
-        // request to backend to create new  rollout configuration
-        console.log("New Rollout Configuration created sucessfully");
-        const createInfo = {
-          object_uid:
-            rolloutConfigInfo["object_uid"][
-              rolloutConfigInfo["object_uid"].length - 1
-            ],
-          values: rolloutConfigInfo["value"],
-          rollout_start_range: rolloutConfigInfo["rolloutStartRange"],
-          rollout_end_range: rolloutConfigInfo["rolloutEndRange"],
-        };
-        console.log("before click :", createInfo);
-        axios
-          .post(
-            `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
-            createInfo
-          )
-          .then((res) => {
-            console.log(res);
-            console.log(res.data.message);
-          });
+        if (props.rolloutInfo.rolloutLevel === "Goal") {
+          const createInfo = {
+            object_uid: rolloutConfigInfo["object_uid"][0],
+            value: rolloutConfigInfo["value"],
+            rollout_start_range: parseInt(
+              rolloutConfigInfo["rolloutStartRange"]
+            ),
+            rollout_end_range: parseInt(rolloutConfigInfo["rolloutEndRange"]),
+          };
+          console.log("before click :", createInfo);
+          axios
+            .post(
+              `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
+              createInfo
+            )
+            .then((res) => {
+              console.log(res);
+              console.log(res.data.message);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          // request to backend to create new  rollout configuration
+
+          console.log("New Rollout Configuration created sucessfully");
+          for (let i = 0; i < rolloutConfigInfo["object_uid"].length; i++) {
+            const createInfo = {
+              object_uid: rolloutConfigInfo["object_uid"][i],
+              value: rolloutConfigInfo["value"],
+              rollout_start_range: parseInt(
+                rolloutConfigInfo["rolloutStartRange"]
+              ),
+              rollout_end_range: parseInt(rolloutConfigInfo["rolloutEndRange"]),
+            };
+            console.log("before click :", createInfo);
+            axios
+              .post(
+                `http://127.0.0.1:8000/rollout/${props.rolloutId}/configuration`,
+                createInfo
+              )
+              .then((res) => {
+                console.log(res);
+                console.log(res.data.message);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
         setCreateConfigOpen(false);
         setRolloutConfigInfo({
           ...rolloutConfigInfo,
@@ -127,6 +258,14 @@ export default function EditConfiguration(props) {
       // TO DO : open the edit sidebar
       console.log("Edit config button clicked");
       setViewConfigOpen(false);
+      setConfigData({
+        ...configData,
+        config_ids: rolloutConfigInfo.config_ids,
+        object_uid: rolloutConfigInfo.object_uid,
+        value: rolloutConfigInfo.value,
+        rolloutStartRange: rolloutConfigInfo.rolloutStartRange,
+        rolloutEndRange: rolloutConfigInfo.rolloutEndRange,
+      });
       setTimeout(() => {
         setEditConfigOpen(true);
       }, 500);
@@ -160,13 +299,13 @@ export default function EditConfiguration(props) {
     <Box style={useStyles} component="div">
       <div
         style={{
-          backgroundColor: "#ACCBF7",
+          backgroundColor: "rgb(225, 229, 234)",
           marginTop: "0px",
         }}
       >
         <h1
           style={{
-            color: "#2d81f7",
+            color: "black",
             textAlign: "center",
             paddingTop: "1vw",
             paddingBottom: "1vw",
@@ -180,7 +319,11 @@ export default function EditConfiguration(props) {
         </h1>
       </div>
       <Form
-        formData={formData}
+        formData={
+          props.rolloutInfo["rolloutLevel"] == "Goal"
+            ? formData
+            : formData.slice(0, 2)
+        }
         rolloutInfo={rolloutConfigInfo}
         setRolloutInfo={setRolloutConfigInfo}
         reqError={reqError}
@@ -188,8 +331,10 @@ export default function EditConfiguration(props) {
         textFieldStyle={textFieldStyle}
         dropdownStyle={dropdownStyle}
         propertyMapping={propertyMapping}
-        handleDelete={handleDelete}
         disableField={viewConfigOpen}
+        isChipDisabled={
+          props.rolloutInfo.rolloutLevel === "Goal" && editConfigOpen
+        }
       />
       <div
         style={{

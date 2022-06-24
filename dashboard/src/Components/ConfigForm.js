@@ -40,7 +40,7 @@ export default function FormPropsTextFields(props) {
           </div>
         ) : (
           <Chip
-            disable={props.disableField}
+            disable={props.disableField || props.isChipDisabled}
             key={index}
             rolloutInfo={rolloutInfo}
             setRolloutInfo={setRolloutInfo}
@@ -49,7 +49,7 @@ export default function FormPropsTextFields(props) {
             dropdownStyle={props.dropdownStyle}
             propertyMapping={propertyMapping}
             reqError={props.reqError}
-            handleDelete={props.handleDelete}
+            isGoalOpen = {props.isGoalOpen}
           />
         );
       })}
